@@ -2,7 +2,7 @@
 <html lang="zh-TW" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MMMIXHUI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -21,17 +21,11 @@
           animation: {
             'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             'float': 'float 6s ease-in-out infinite',
-            'glitch': 'glitch 1s linear infinite'
           },
           keyframes: {
             float: {
               '0%, 100%': { transform: 'translateY(0)' },
               '50%': { transform: 'translateY(-10px)' },
-            },
-            glitch: {
-              '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
-              '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
-              '62%': { transform: 'translate(0,0) skew(5deg)' },
             }
           }
         }
@@ -77,17 +71,17 @@
       scroll-snap-type: x mandatory;
       scrollbar-width: thin;
       scrollbar-color: #00f0ff #050510;
+      -webkit-overflow-scrolling: touch; /* 優化 iOS 觸控滑動 */
     }
-    .cyber-scrollbar::-webkit-scrollbar { height: 6px; }
+    .cyber-scrollbar::-webkit-scrollbar { height: 4px; }
     .cyber-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.5); }
     .cyber-scrollbar::-webkit-scrollbar-thumb { background: #00f0ff; border-radius: 10px; }
 
     .neon-text { text-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff; }
     .neon-text-pink { text-shadow: 0 0 5px #ff007f, 0 0 10px #ff007f; }
-    .clip-corner { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%); }
-    .clip-corner-reverse { clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px); }
+    .clip-corner { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%); }
+    .clip-corner-reverse { clip-path: polygon(15px 0, 100% 0, 100% 100%, 0 100%, 0 15px); }
 
-    /* Filter Button Active State */
     .filter-btn.active {
       background: rgba(0, 240, 255, 0.2);
       border-color: #00f0ff;
@@ -99,84 +93,78 @@
 <body class="font-mono selection:bg-cyber-cyan selection:text-black">
 
   <!-- HUD 全局導覽列 -->
-  <nav class="fixed w-full top-0 z-40 bg-cyber-black/80 backdrop-blur-md border-b border-cyber-cyan/30 flex justify-between items-center p-4 md:px-8">
-    <div class="flex items-center gap-4">
-      <div class="w-3 h-3 rounded-full bg-cyber-cyan animate-pulse-fast shadow-[0_0_10px_#00f0ff]"></div>
-      <div class="text-xl md:text-2xl font-black tracking-widest text-cyber-cyan hover:text-white transition-colors cursor-pointer" onclick="window.scrollTo(0,0)">
-        MMMIXHUI<span class="text-white opacity-50">instagram.com/mmmixhui_2021</span>
+  <nav class="fixed w-full top-0 z-40 bg-cyber-black/90 backdrop-blur-md border-b border-cyber-cyan/30 flex justify-between items-center p-3 md:p-4 lg:px-8">
+    <div class="flex items-center gap-2 md:gap-4">
+      <div class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-cyber-cyan animate-pulse-fast shadow-[0_0_10px_#00f0ff]"></div>
+      <div class="text-sm md:text-xl lg:text-2xl font-black tracking-widest text-cyber-cyan hover:text-white transition-colors cursor-pointer truncate" onclick="window.scrollTo(0,0)">
+        MMMIXHUI<span class="text-white opacity-50 hidden sm:inline">instagram.com/mmmixhui_2021 </span>
       </div>
     </div>
-    <div class="flex gap-6 text-xs md:text-sm font-bold text-cyber-cyan/70 tracking-widest">
+    <div class="flex gap-4 md:gap-6 text-[10px] sm:text-xs md:text-sm font-bold text-cyber-cyan/70 tracking-widest">
       <a href="#about" class="hover:text-cyber-pink hover:neon-text-pink transition-all">IDENTITY</a>
       <a href="#archive" class="hover:text-cyber-cyan hover:neon-text transition-all">ARCHIVE</a>
     </div>
   </nav>
 
-  <main class="pt-24 pb-20 px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col gap-20">
+  <main class="pt-20 md:pt-24 pb-20 px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col gap-16 md:gap-20">
     
-    <!-- 模組一：C -->
-    <section id="about" class="flex flex-col lg:flex-row gap-10 mt-10 scroll-mt-28">
+    <!-- 模組一：關於我 (IDENTITY) -->
+    <section id="about" class="flex flex-col lg:flex-row gap-6 md:gap-10 mt-6 md:mt-10 scroll-mt-24">
       
       <!-- 左側：數位身分投影 -->
-      <div class="lg:w-1/3 glass-card clip-corner-reverse p-1 relative flex flex-col items-center justify-center min-h-[400px] group">
+      <div class="w-full lg:w-1/3 glass-card clip-corner-reverse p-1 relative flex flex-col items-center justify-center min-h-[350px] md:min-h-[400px] py-8 lg:py-0">
         <div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-cyber-cyan"></div>
         <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-cyber-cyan"></div>
         
-        <!-- 頭像區 (可替換為實際相片網址) -->
-        <div class="w-48 h-48 rounded-full border-2 border-dashed border-cyber-cyan/50 p-2 relative animate-float mb-6">
+        <!-- 頭像區 -->
+        <div class="w-32 h-32 md:w-48 md:h-48 rounded-full border-2 border-dashed border-cyber-cyan/50 p-2 relative animate-float mb-4 md:mb-6">
           <div class="w-full h-full rounded-full bg-gradient-to-br from-cyber-purple/40 to-cyber-cyan/20 overflow-hidden flex items-center justify-center border border-cyber-cyan shadow-[0_0_20px_rgba(0,240,255,0.2)]">
             <img src="avatar.jpg" class="w-full h-full object-cover">
           </div>
         </div>
 
-        <h1 class="text-3xl font-black text-white tracking-widest uppercase text-center">
-          <span class="text-cyber-cyan block text-sm mb-2">>>> DESIGN_ENTITY:</span>
-          黑果仔 台灣插畫家
+        <h1 class="text-2xl md:text-3xl font-black text-white tracking-widest uppercase text-center px-4">
+          <span class="text-cyber-cyan block text-xs md:text-sm mb-1 md:mb-2">>>> DESIGN_ENTITY:</span>
+            黑果仔 台灣插畫家
         </h1>
-        <p class="text-cyber-pink tracking-widest mt-2 font-bold text-sm">GRAPHIC DESIGNER // VISUAL ARTIST</p>
+        <p class="text-cyber-pink tracking-widest mt-2 font-bold text-xs md:text-sm text-center">GRAPHIC DESIGNER // VISUAL ARTIST</p>
         
-        <div class="mt-6 flex gap-3">
-          <div class="bg-cyber-purple/20 border border-cyber-purple px-2 py-1 text-[10px] text-cyber-purple">LOC: TAIWAN_886</div>
-          <div class="bg-cyber-cyan/20 border border-cyber-cyan px-2 py-1 text-[10px] text-cyber-cyan">STATUS: CREATING</div>
+        <div class="mt-4 md:mt-6 flex flex-wrap justify-center gap-2 md:gap-3 px-4">
+          <div class="bg-cyber-purple/20 border border-cyber-purple px-2 py-1 text-[9px] md:text-[10px] text-cyber-purple">LOC: TAIWAN_886</div>
+          <div class="bg-cyber-cyan/20 border border-cyber-cyan px-2 py-1 text-[9px] md:text-[10px] text-cyber-cyan">STATUS: CREATING</div>
         </div>
       </div>
 
       <!-- 右側：技能數據與論述 -->
-      <div class="lg:w-2/3 flex flex-col gap-6">
-        <div class="glass-card clip-corner p-8">
-          <h2 class="text-xl font-bold text-cyber-cyan mb-4 tracking-widest border-b border-cyber-cyan/30 pb-2">關於我 ABOUT ME ...</h2>
-          <p class="text-gray-300 leading-relaxed font-sans text-lg">
-            嗨！大家好～
-先來一遍介紹文，
-牠黑溜溜的一隻小生物-黑果仔，
-因為我很怕冷，就設定讓牠在寒冷冬天出生，
-非常愛睡覺、個性懶懶的，喜歡吃冰棒跟彩虹餅乾，每天都呆萌呆萌的過日子。
-算是我養的一隻小寵物，在這裡會跟大家分享生活與黑果仔的小故事。
+      <div class="w-full lg:w-2/3 flex flex-col gap-6">
+        <div class="glass-card clip-corner p-6 md:p-8">
+          <h2 class="text-lg md:text-xl font-bold text-cyber-cyan mb-3 md:mb-4 tracking-widest border-b border-cyber-cyan/30 pb-2">>>>關於我 ABOUT ME</h2>
+          <p class="text-gray-300 leading-relaxed font-sans text-sm md:text-base lg:text-lg">
+            牠黑溜溜的一隻小生物-黑果仔，
+            因為我很怕冷，就設定讓牠在寒冷冬天出生，
+            非常愛睡覺、個性懶懶的，喜歡吃冰棒跟彩虹餅乾，每天都呆萌呆萌的過日子。
+            算是我養的一隻小寵物，在這裡會跟大家分享生活與黑果仔的小故事。
           </p>
         </div>
 
-        <div class="glass-card clip-corner p-8">
-          <h2 class="text-xl font-bold text-cyber-cyan mb-6 tracking-widest border-b border-cyber-cyan/30 pb-2">>>> CAPABILITIES_MATRIX</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- 技能條 1 -->
+        <div class="glass-card clip-corner p-6 md:p-8">
+          <h2 class="text-lg md:text-xl font-bold text-cyber-cyan mb-4 md:mb-6 tracking-widest border-b border-cyber-cyan/30 pb-2">>>> CAPABILITIES_MATRIX</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <div class="flex justify-between text-xs mb-1 text-white"><span class="tracking-widest">BRANDING (品牌識別)</span><span class="text-cyber-cyan">95%</span></div>
-              <div class="w-full h-2 bg-cyber-black border border-cyber-cyan/30"><div class="h-full bg-cyber-cyan shadow-[0_0_10px_#00f0ff]" style="width: 95%"></div></div>
+              <div class="flex justify-between text-[10px] md:text-xs mb-1 text-white"><span class="tracking-widest">BRANDING</span><span class="text-cyber-cyan">95%</span></div>
+              <div class="w-full h-1.5 md:h-2 bg-cyber-black border border-cyber-cyan/30"><div class="h-full bg-cyber-cyan shadow-[0_0_10px_#00f0ff]" style="width: 95%"></div></div>
             </div>
-            <!-- 技能條 2 -->
             <div>
-              <div class="flex justify-between text-xs mb-1 text-white"><span class="tracking-widest">UI/UX VISUAL (介面視覺)</span><span class="text-cyber-pink">88%</span></div>
-              <div class="w-full h-2 bg-cyber-black border border-cyber-pink/30"><div class="h-full bg-cyber-pink shadow-[0_0_10px_#ff007f]" style="width: 88%"></div></div>
+              <div class="flex justify-between text-[10px] md:text-xs mb-1 text-white"><span class="tracking-widest">UI/UX VISUAL</span><span class="text-cyber-pink">88%</span></div>
+              <div class="w-full h-1.5 md:h-2 bg-cyber-black border border-cyber-pink/30"><div class="h-full bg-cyber-pink shadow-[0_0_10px_#ff007f]" style="width: 88%"></div></div>
             </div>
-            <!-- 技能條 3 -->
             <div>
-              <div class="flex justify-between text-xs mb-1 text-white"><span class="tracking-widest">TYPOGRAPHY (字體排印)</span><span class="text-cyber-purple">92%</span></div>
-              <div class="w-full h-2 bg-cyber-black border border-cyber-purple/30"><div class="h-full bg-cyber-purple shadow-[0_0_10px_#8a2be2]" style="width: 92%"></div></div>
+              <div class="flex justify-between text-[10px] md:text-xs mb-1 text-white"><span class="tracking-widest">TYPOGRAPHY</span><span class="text-cyber-purple">92%</span></div>
+              <div class="w-full h-1.5 md:h-2 bg-cyber-black border border-cyber-purple/30"><div class="h-full bg-cyber-purple shadow-[0_0_10px_#8a2be2]" style="width: 92%"></div></div>
             </div>
-            <!-- 技能條 4 -->
             <div>
-              <div class="flex justify-between text-xs mb-1 text-white"><span class="tracking-widest">ILLUSTRATION (插畫/合成)</span><span class="text-green-400">85%</span></div>
-              <div class="w-full h-2 bg-cyber-black border border-green-400/30"><div class="h-full bg-green-400 shadow-[0_0_10px_#4ade80]" style="width: 85%"></div></div>
+              <div class="flex justify-between text-[10px] md:text-xs mb-1 text-white"><span class="tracking-widest">ILLUSTRATION</span><span class="text-green-400">85%</span></div>
+              <div class="w-full h-1.5 md:h-2 bg-cyber-black border border-green-400/30"><div class="h-full bg-green-400 shadow-[0_0_10px_#4ade80]" style="width: 85%"></div></div>
             </div>
           </div>
         </div>
@@ -184,63 +172,63 @@
     </section>
 
     <!-- 模組二：專案展示庫 (ARCHIVE) -->
-    <section id="archive" class="scroll-mt-28">
-      <div class="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-cyber-cyan/30 pb-4 gap-6">
+    <section id="archive" class="scroll-mt-24">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 md:mb-8 border-b border-cyber-cyan/30 pb-4 gap-4 md:gap-6">
         <div>
-          <h2 class="text-4xl font-black neon-text uppercase tracking-widest">DATA_ARCHIVE</h2>
-          <p class="text-cyber-purple mt-2 tracking-widest text-sm">INDEXING SECURE VISUAL ASSETS...</p>
+          <h2 class="text-2xl md:text-4xl font-black neon-text uppercase tracking-widest">DATA_ARCHIVE</h2>
+          <p class="text-cyber-purple mt-1 md:mt-2 tracking-widest text-xs md:text-sm">INDEXING SECURE VISUAL ASSETS...</p>
         </div>
         
-        <!-- 動態分類過濾器 (由 JS 自動生成) -->
-        <div id="filter-container" class="flex flex-wrap gap-3 justify-start md:justify-end">
+        <!-- 動態分類過濾器 -->
+        <div id="filter-container" class="flex flex-row overflow-x-auto w-full md:w-auto md:flex-wrap gap-2 md:gap-3 justify-start md:justify-end pb-2 md:pb-0 cyber-scrollbar">
           <!-- 按鈕會動態插入這裡 -->
         </div>
       </div>
 
       <!-- 讀取狀態 -->
-      <div id="status-display" class="flex flex-col items-center justify-center py-20 glass-card clip-corner">
-        <div class="w-16 h-16 border-4 border-cyber-cyan/20 border-t-cyber-cyan rounded-full animate-spin mb-6"></div>
-        <h2 class="text-xl font-black tracking-widest text-cyber-cyan animate-pulse">CONNECTING TO DATABASE...</h2>
+      <div id="status-display" class="flex flex-col items-center justify-center py-16 md:py-20 glass-card clip-corner">
+        <div class="w-12 h-12 md:w-16 md:h-16 border-4 border-cyber-cyan/20 border-t-cyber-cyan rounded-full animate-spin mb-4 md:mb-6"></div>
+        <h2 class="text-lg md:text-xl font-black tracking-widest text-cyber-cyan animate-pulse text-center px-4">CONNECTING TO DATABASE...</h2>
       </div>
 
       <!-- 專案畫廊網格 -->
-      <div id="portfolio-grid" class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-10"></div>
+      <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-10"></div>
     </section>
 
   </main>
 
-  <!-- 全息投影 Lightbox (保留原有功能) -->
-  <div id="lightbox" class="fixed inset-0 z-50 hidden bg-cyber-black/95 backdrop-blur-xl p-4 md:p-8 overflow-y-auto flex items-center justify-center">
-    <div class="w-full max-w-7xl glass-card clip-corner flex flex-col relative animate-float">
+  <!-- 全息投影 Lightbox -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden bg-cyber-black/95 backdrop-blur-xl p-2 md:p-8 overflow-y-auto flex items-start md:items-center justify-center">
+    <div class="w-full max-w-7xl glass-card clip-corner flex flex-col relative animate-float mt-14 md:mt-0 mb-8 md:mb-0">
       
-      <div class="flex justify-between items-center p-4 border-b border-cyber-cyan/30 bg-white/5">
-        <div class="flex items-center gap-3">
+      <div class="flex justify-between items-center p-3 md:p-4 border-b border-cyber-cyan/30 bg-white/5 sticky top-0 z-10 backdrop-blur-md">
+        <div class="flex items-center gap-2 md:gap-3">
           <div class="w-2 h-2 bg-cyber-pink rounded-full shadow-[0_0_8px_#ff007f]"></div>
-          <span id="lb-title-bar" class="font-bold tracking-widest text-cyber-cyan text-xs md:text-sm">ASSET_VIEWER_v3.0</span>
+          <span id="lb-title-bar" class="font-bold tracking-widest text-cyber-cyan text-[10px] md:text-sm truncate max-w-[150px] sm:max-w-xs">VIEWER</span>
         </div>
-        <button onclick="closeLightbox()" class="text-cyber-cyan hover:text-white hover:bg-cyber-pink/50 border border-cyber-cyan/30 px-4 py-1 text-sm tracking-widest transition-colors clip-corner">
-          DISCONNECT [X]
+        <button onclick="closeLightbox()" class="text-cyber-cyan hover:text-white active:bg-cyber-pink/50 border border-cyber-cyan/30 px-3 md:px-4 py-1 text-xs md:text-sm tracking-widest transition-colors clip-corner flex-shrink-0">
+          CLOSE [X]
         </button>
       </div>
 
-      <div class="p-6 md:p-10 flex flex-col xl:flex-row gap-8 max-h-[80vh] overflow-y-auto cyber-scrollbar">
-        <div class="xl:w-1/3 flex flex-col gap-6">
-          <div class="inline-block border border-cyber-purple text-cyber-purple px-3 py-1 text-xs tracking-widest w-fit bg-cyber-purple/10">
+      <div class="p-4 md:p-10 flex flex-col xl:flex-row gap-6 md:gap-8 max-h-[85vh] overflow-y-auto cyber-scrollbar">
+        <div class="w-full xl:w-1/3 flex flex-col gap-4 md:gap-6">
+          <div class="inline-block border border-cyber-purple text-cyber-purple px-2 py-1 text-[10px] md:text-xs tracking-widest w-fit bg-cyber-purple/10">
             CLASS: <span id="lb-category" class="text-white"></span>
           </div>
-          <h2 id="lb-title" class="text-3xl md:text-5xl font-black uppercase neon-text leading-tight"></h2>
-          <div class="relative p-6 border border-cyber-cyan/20 bg-cyber-cyan/5 clip-corner mt-4">
-            <p id="lb-desc" class="text-sm md:text-base text-gray-300 leading-relaxed whitespace-pre-wrap font-sans"></p>
+          <h2 id="lb-title" class="text-2xl md:text-4xl lg:text-5xl font-black uppercase neon-text leading-tight"></h2>
+          <div class="relative p-4 md:p-6 border border-cyber-cyan/20 bg-cyber-cyan/5 clip-corner mt-2 md:mt-4">
+            <p id="lb-desc" class="text-xs md:text-sm lg:text-base text-gray-300 leading-relaxed whitespace-pre-wrap font-sans"></p>
           </div>
         </div>
-        <div id="lb-gallery" class="xl:w-2/3 flex flex-col gap-6"></div>
+        <div id="lb-gallery" class="w-full xl:w-2/3 flex flex-col gap-4 md:gap-6"></div>
       </div>
     </div>
   </div>
 
   <script>
-    // ★ 請務必替換為您的 API 網址
-    const API_URL = "https://script.google.com/macros/s/AKfycbyTNadGAs8vcQWzYJmQcGK-UqhYbSAPtOnEy4hFn7DQnEn6Haj3iWhVvrI1PjJKEAED2w/exec"; 
+    // ★ 記得將下方替換為您的 API 網址
+    const API_URL = "請在此貼上模組二產生的_API_網址"; 
     
     let globalData = [];
     let currentFilter = 'ALL';
@@ -257,39 +245,34 @@
         globalData = data.reverse(); 
         statusDisplay.style.display = 'none';
         
-        generateFilters(); // 建立分類按鈕
-        renderGrid(globalData); // 初次渲染所有作品
+        generateFilters(); 
+        renderGrid(globalData); 
       } catch (error) {
         statusDisplay.innerHTML = `
-          <h2 class="neon-text-pink text-2xl font-black mb-2">NODE_SYNC_FAILED</h2>
-          <p class="text-white/80 text-sm">ERROR: ${error.message}</p>
+          <h2 class="neon-text-pink text-xl md:text-2xl font-black mb-2 text-center">NODE_SYNC_FAILED</h2>
+          <p class="text-white/80 text-xs md:text-sm text-center px-4">ERROR: ${error.message}</p>
         `;
       }
     };
 
-    // 核心功能：動態生成分類過濾器
     function generateFilters() {
       const filterContainer = document.getElementById('filter-container');
       filterContainer.innerHTML = '';
 
-      // 從資料庫中萃取所有獨一無二的「分類」
       const categories = ['ALL', ...new Set(globalData.map(item => item.分類).filter(Boolean))];
 
       categories.forEach(cat => {
         const btn = document.createElement('button');
         btn.textContent = `[ ${cat} ]`;
-        btn.className = `filter-btn text-xs md:text-sm px-4 py-2 border border-cyber-cyan/30 text-gray-400 hover:text-cyber-cyan hover:border-cyber-cyan transition-all clip-corner tracking-widest ${cat === 'ALL' ? 'active' : ''}`;
+        btn.className = `filter-btn whitespace-nowrap text-[10px] md:text-xs lg:text-sm px-3 md:px-4 py-1.5 md:py-2 border border-cyber-cyan/30 text-gray-400 hover:text-cyber-cyan hover:border-cyber-cyan transition-all clip-corner tracking-widest ${cat === 'ALL' ? 'active' : ''}`;
         
         btn.onclick = (e) => {
-          // 更新按鈕視覺狀態
           document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
           e.target.classList.add('active');
           
-          // 執行資料篩選
           currentFilter = cat;
           const filteredData = cat === 'ALL' ? globalData : globalData.filter(p => p.分類 === cat);
           
-          // 重新渲染網格（加入簡單淡出淡入效果）
           const grid = document.getElementById('portfolio-grid');
           grid.style.opacity = 0;
           setTimeout(() => {
@@ -306,12 +289,11 @@
       grid.innerHTML = ''; 
       
       if(projects.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-20 text-cyber-pink tracking-widest border border-cyber-pink/30 glass-card">NO_DATA_FOUND_IN_THIS_SECTOR</div>`;
+        grid.innerHTML = `<div class="col-span-full text-center py-10 md:py-20 text-[10px] md:text-sm text-cyber-pink tracking-widest border border-cyber-pink/30 glass-card">NO_DATA_FOUND_IN_THIS_SECTOR</div>`;
         return;
       }
 
       projects.forEach((p) => {
-        // 為了在 Lightbox 中找到正確原始索引，透過名稱回推 globalData index
         const originalIndex = globalData.findIndex(item => item.ID === p.ID || item.專案名稱 === p.專案名稱);
 
         const card = document.createElement('div');
@@ -319,7 +301,7 @@
         card.onclick = () => openLightbox(originalIndex);
 
         const galleryWrap = document.createElement('div');
-        galleryWrap.className = "w-full flex cyber-scrollbar border-b border-cyber-cyan/30 aspect-video md:aspect-[16/10]";
+        galleryWrap.className = "w-full flex cyber-scrollbar border-b border-cyber-cyan/30 aspect-[4/3] md:aspect-video";
         
         if (p.images && p.images.length > 0) {
           p.images.forEach((imgUrl, i) => {
@@ -327,11 +309,11 @@
             imgContainer.className = "w-full h-full shrink-0 snap-center relative";
             const img = document.createElement('img');
             img.src = imgUrl;
-            img.className = "w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500";
+            img.className = "w-full h-full object-cover opacity-90 md:opacity-80 group-hover:opacity-100 transition-opacity duration-500";
             img.loading = "lazy";
             
             const indicator = document.createElement('div');
-            indicator.className = "absolute bottom-3 right-3 bg-cyber-black/80 border border-cyber-cyan/50 text-cyber-cyan text-[10px] px-2 py-1 backdrop-blur-sm font-bold tracking-widest";
+            indicator.className = "absolute bottom-2 right-2 md:bottom-3 md:right-3 bg-cyber-black/80 border border-cyber-cyan/50 text-cyber-cyan text-[9px] md:text-[10px] px-1.5 py-0.5 md:px-2 md:py-1 backdrop-blur-sm font-bold tracking-widest";
             indicator.textContent = `IMG [ ${i + 1} / ${p.images.length} ]`;
 
             imgContainer.appendChild(img);
@@ -341,14 +323,14 @@
         }
 
         const infoWrap = document.createElement('div');
-        infoWrap.className = "p-6 flex flex-col gap-3 relative overflow-hidden";
+        infoWrap.className = "p-4 md:p-6 flex flex-col gap-2 md:gap-3 relative overflow-hidden";
         
         const catEl = document.createElement('div');
-        catEl.className = "text-cyber-purple text-xs font-bold tracking-widest uppercase mb-1";
+        catEl.className = "text-cyber-purple text-[10px] md:text-xs font-bold tracking-widest uppercase mb-0.5 md:mb-1";
         catEl.textContent = `> ${p.分類}`; 
 
         const titleEl = document.createElement('h3');
-        titleEl.className = "text-xl font-bold uppercase text-white tracking-wider truncate group-hover:text-cyber-cyan transition-colors";
+        titleEl.className = "text-base md:text-xl font-bold uppercase text-white tracking-wider truncate group-hover:text-cyber-cyan transition-colors";
         titleEl.textContent = p.專案名稱;
 
         infoWrap.appendChild(catEl);
@@ -368,7 +350,7 @@
       document.getElementById('lb-category').textContent = p.分類;
       document.getElementById('lb-title').textContent = p.專案名稱;
       document.getElementById('lb-desc').textContent = p.描述;
-      document.getElementById('lb-title-bar').textContent = `ASSET_VIEWER: ${p.專案名稱}.exe`;
+      document.getElementById('lb-title-bar').textContent = `${p.專案名稱}.exe`;
       
       const gallery = document.getElementById('lb-gallery');
       gallery.innerHTML = ''; 
@@ -376,7 +358,7 @@
       if (p.images) {
         p.images.forEach(imgUrl => {
           const imgWrap = document.createElement('div');
-          imgWrap.className = "relative p-2 border border-cyber-cyan/20 bg-cyber-black/50";
+          imgWrap.className = "relative p-1.5 md:p-2 border border-cyber-cyan/20 bg-cyber-black/50";
           const img = document.createElement('img');
           img.src = imgUrl;
           img.className = "w-full object-contain filter contrast-125";
