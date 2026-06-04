@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARCHIVE_SYS.*</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Neo-Brutalism 方格紙背景 */
+    body {
+      background-color: #FFF066; /* 亮黃色 */
+      background-image: 
+        linear-gradient(black 2px, transparent 2px), 
+        linear-gradient(90deg, black 2px, transparent 2px);
+      background-size: 40px 40px;
+      background-position: center center;
+    }
+    
+    .brutal-border { border: 4px solid black; }
+    .brutal-shadow { box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
+    
+    /* 硬派物理回饋 (無漸變動畫) */
+    .brutal-card { transition: none; }
+    .brutal-card:hover {
+      transform: translate(4px, 4px);
+      box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+    }
+    .brutal-card:active {
+      transform: translate(8px, 8px);
+      box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+    }
+
+    /* 原生級橫向滑動藝廊 */
+    .snap-gallery {
+      scroll-snap-type: x mandatory;
+      overscroll-behavior-x: contain;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    .snap-gallery::-webkit-scrollbar { display: none; }
+  </style>
+</head>
+<body class="font-mono text-black min-h-screen selection:bg-[#FF90E8] selection:text-black pb-20">
+
+  <nav class="p-4 md:p-6 flex justify-between items-center brutal-border bg-[#FF90E8] text-black m-4 md:m-8 bg-opacity-95 backdrop-blur-sm sticky top-4 z-40 brutal-shadow">
+    <div class="text-2xl md:text-4xl font-black uppercase tracking-tighter">PORTFOLIO.exe</div>
+    <div class="bg-white text-black font-bold px-3 md:px-4 py-1 brutal-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-xs md:text-base">v 2.0</div>
+  </nav>
+
+  <main class="px-4 md:px-8 max-w-[1600px] mx-auto">
+    <div id="status-display" class="text-3xl md:text-5xl font-black uppercase text-center mt-20 bg-white brutal-border inline-block px-8 py-6 brutal-shadow">
+      <span class="animate-pulse">FETCHING_DATA...</span>
+    </div>
+    
+    <div id="portfolio-grid" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12 mt-8"></div>
+  </main>
+
+  <div id="lightbox" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm p-4 md:p-8 overflow-y-auto">
+    <div class="max-w-6xl mx-auto bg-white brutal-border shadow-[16px_16px_0px_0px_rgba(255,144,232,1)] mt-4 md:mt-10 mb-20 flex flex-col">
+      
+      <div class="bg-black text-white px-4 py-3 flex justify-between items-center border-b-4 border-black">
+        <span id="lb-title-bar" class="font-bold uppercase tracking-widest text-sm md:text-base">VIEWER.exe</span>
+        <button onclick="closeLightbox()" class="bg-red-500 brutal-border px-4 py-1 font-black hover:bg-red-600 active:translate-y-1 text-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] active:shadow-none transition-none">
+          [ X ]
+        </button>
+      </div>
+
+      <div class="p-6 md:p-12 flex flex-col xl:flex-row gap-10">
+        <div class="xl:w-1/3 xl:sticky xl:top-6 h-fit">
+          <div id="lb-category" class="inline-block bg-[#FFF066] brutal-border font-bold px-3 py-1 mb-6 uppercase text-sm"></div>
+          <h2 id="lb-title" class="text-4xl md:text-6xl font-black uppercase mb-8 leading-none"></h2>
+          <p id="lb-desc" class="text-lg font-medium border-l-[6px] border-black pl-4 whitespace-pre-wrap leading-relaxed bg-stone-100 p-4 brutal-border"></p>
+        </div>
+        
+        <div id="lb-gallery" class="xl:w-2/3 flex flex-col gap-8"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ★ 貼上您模組二的 Public API 網址
+    const API_URL = "請在此貼上模組二產生的_API_網址"; 
+    
+    let globalData = [];
+
+    window.onload = async function() {
+      const statusDisplay = document.getElementById('status-display');
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error('Network response was not ok');
+        
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+        
+        globalData = data.reverse(); // 最新專案排在最前
+        statusDisplay.style.display = 'none';
+        renderGrid(globalData);
+      } catch (error) {
+        statusDisplay.innerHTML = '<span class="text-red-600">CRITICAL_ERROR: 系統連線失敗</span>';
+        statusDisplay.classList.add('border-red-600', 'shadow-[8px_8px_0px_0px_rgba(220,38,38,1)]');
+      }
+    };
+
+    // 資安防禦渲染：使用 textContent 建立 DOM 防範 XSS
+    function renderGrid(projects) {
+      const grid = document.getElementById('portfolio-grid');
+      grid.innerHTML = ''; // 清空載入狀態
+      
+      projects.forEach((p, index) => {
+        // 建立卡片外框
+        const card = document.createElement('div');
+        card.className = "brutal-card brutal-border brutal-shadow cursor-pointer flex flex-col bg-white";
+        card.onclick = () => openLightbox(index);
+
+        // 建立圖片輪播區塊
+        const galleryWrap = document.createElement('div');
+        galleryWrap.className = "w-full flex snap-gallery bg-black border-b-4 border-black aspect-square md:aspect-[4/3]";
+        
+        p.images.forEach(imgUrl => {
+          const img = document.createElement('img');
+          img.src = imgUrl; // URL 已在後端清洗並限定為 Google Drive 域名
+          img.className = "w-full h-full object-cover shrink-0 snap-center border-r-4 border-black last:border-r-0";
+          img.loading = "lazy";
+          img.decoding = "async";
+          galleryWrap.appendChild(img);
+        });
+
+        // 建立底部文字資訊區
+        const infoWrap = document.createElement('div');
+        infoWrap.className = "p-6 flex justify-between items-start gap-4";
+        
+        const titleEl = document.createElement('h3');
+        titleEl.className = "text-2xl font-black uppercase leading-tight line-clamp-2";
+        titleEl.textContent = p.專案名稱; // [資安] 嚴格使用 textContent
+
+        const catEl = document.createElement('div');
+        catEl.className = "bg-black text-white px-3 py-1.5 text-sm font-bold uppercase shrink-0 brutal-border";
+        catEl.textContent = p.分類; // [資安] 嚴格使用 textContent
+
+        infoWrap.appendChild(titleEl);
+        infoWrap.appendChild(catEl);
+        
+        card.appendChild(galleryWrap);
+        card.appendChild(infoWrap);
+        grid.appendChild(card);
+      });
+    }
+
+    function openLightbox(index) {
+      const p = globalData[index];
+      const lb = document.getElementById('lightbox');
+      
+      // [資安] 嚴格使用 textContent 插入資料
+      document.getElementById('lb-category').textContent = p.分類;
+      document.getElementById('lb-title').textContent = p.專案名稱;
+      document.getElementById('lb-desc').textContent = p.描述;
+      document.getElementById('lb-title-bar').textContent = `${p.專案名稱}.exe`;
+      
+      // 渲染圖片
+      const gallery = document.getElementById('lb-gallery');
+      gallery.innerHTML = ''; 
+      p.images.forEach(imgUrl => {
+        const img = document.createElement('img');
+        img.src = imgUrl;
+        img.className = "w-full brutal-border shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-stone-100";
+        img.loading = "lazy";
+        gallery.appendChild(img);
+      });
+
+      lb.classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // 防止背景滾動
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+  </script>
+</body>
+</html>
