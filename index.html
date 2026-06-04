@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-TW" class="dark">
+<html lang="zh-TW" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MMMIXHUI // META_ARCHIVE</title>
+  <title>MMMIXHUI // DIGITAL ARCHIVE</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -21,11 +21,17 @@
           animation: {
             'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             'float': 'float 6s ease-in-out infinite',
+            'glitch': 'glitch 1s linear infinite'
           },
           keyframes: {
             float: {
               '0%, 100%': { transform: 'translateY(0)' },
               '50%': { transform: 'translateY(-10px)' },
+            },
+            glitch: {
+              '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+              '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+              '62%': { transform: 'translate(0,0) skew(5deg)' },
             }
           }
         }
@@ -33,7 +39,6 @@
     }
   </script>
   <style>
-    /* 元宇宙背景：星空網格與掃描線 */
     body {
       background-color: #050510;
       background-image: 
@@ -44,19 +49,17 @@
       overflow-x: hidden;
     }
     
-    /* 掃描線特效 overlay */
     body::before {
       content: " ";
       display: block;
       position: fixed;
       top: 0; left: 0; bottom: 0; right: 0;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-      z-index: 100;
+      z-index: -1;
       background-size: 100% 2px, 3px 100%;
       pointer-events: none;
     }
 
-    /* 玻璃擬物與霓虹邊框 */
     .glass-card {
       background: rgba(10, 10, 25, 0.6);
       backdrop-filter: blur(12px);
@@ -68,10 +71,8 @@
     .glass-card:hover {
       border-color: rgba(0, 240, 255, 0.8);
       box-shadow: 0 0 30px rgba(0, 240, 255, 0.2), inset 0 0 30px rgba(138, 43, 226, 0.2);
-      transform: translateY(-5px) scale(1.02);
     }
 
-    /* Web3 多圖太空艙滑動軸 */
     .cyber-scrollbar {
       scroll-snap-type: x mandatory;
       scrollbar-width: thin;
@@ -81,100 +82,165 @@
     .cyber-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.5); }
     .cyber-scrollbar::-webkit-scrollbar-thumb { background: #00f0ff; border-radius: 10px; }
 
-    /* 霓虹文字發光 */
-    .neon-text {
-      color: #fff;
-      text-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff, 0 0 20px #00f0ff;
-    }
-    .neon-text-pink {
-      color: #fff;
-      text-shadow: 0 0 5px #ff007f, 0 0 10px #ff007f, 0 0 20px #ff007f;
-    }
+    .neon-text { text-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff; }
+    .neon-text-pink { text-shadow: 0 0 5px #ff007f, 0 0 10px #ff007f; }
+    .clip-corner { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%); }
+    .clip-corner-reverse { clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px); }
 
-    /* 裁切角 UI (Cyberpunk 邊角) */
-    .clip-corner {
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+    /* Filter Button Active State */
+    .filter-btn.active {
+      background: rgba(0, 240, 255, 0.2);
+      border-color: #00f0ff;
+      color: #00f0ff;
+      box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.5);
     }
   </style>
 </head>
 <body class="font-mono selection:bg-cyber-cyan selection:text-black">
 
-  <!-- HUD 導覽列 -->
+  <!-- HUD 全局導覽列 -->
   <nav class="fixed w-full top-0 z-40 bg-cyber-black/80 backdrop-blur-md border-b border-cyber-cyan/30 flex justify-between items-center p-4 md:px-8">
     <div class="flex items-center gap-4">
       <div class="w-3 h-3 rounded-full bg-cyber-cyan animate-pulse-fast shadow-[0_0_10px_#00f0ff]"></div>
-      <div class="text-xl md:text-2xl font-black tracking-widest text-cyber-cyan">
-        MMMIXHUI<span class="text-white opacity-50"> // META_ARCHIVE</span>
+      <div class="text-xl md:text-2xl font-black tracking-widest text-cyber-cyan hover:text-white transition-colors cursor-pointer" onclick="window.scrollTo(0,0)">
+        MMMIXHUI<span class="text-white opacity-50"> // CORE</span>
       </div>
     </div>
-    <div class="hidden md:flex gap-4 text-xs font-bold text-cyber-cyan/70 tracking-widest">
-      <span>SYS.STATUS: [ <span class="text-green-400">ONLINE</span> ]</span>
-      <span>BLOCK_HEIGHT: <span id="block-height">SYNCING...</span></span>
+    <div class="flex gap-6 text-xs md:text-sm font-bold text-cyber-cyan/70 tracking-widest">
+      <a href="#about" class="hover:text-cyber-pink hover:neon-text-pink transition-all">IDENTITY</a>
+      <a href="#archive" class="hover:text-cyber-cyan hover:neon-text transition-all">ARCHIVE</a>
     </div>
   </nav>
 
-  <main class="pt-28 pb-20 px-4 md:px-8 max-w-[1800px] mx-auto">
+  <main class="pt-24 pb-20 px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col gap-20">
     
-    <!-- 讀取狀態 / 錯誤提示 -->
-    <div id="status-display" class="flex flex-col items-center justify-center mt-32">
-      <div class="w-32 h-32 border-4 border-cyber-cyan/20 border-t-cyber-cyan rounded-full animate-spin mb-8 shadow-[0_0_30px_rgba(0,240,255,0.2)]"></div>
-      <h2 class="text-2xl font-black tracking-widest text-cyber-cyan animate-pulse">ESTABLISHING CONNECTION TO SECURE NODE...</h2>
-      <p class="text-cyber-purple mt-2 text-sm">Decrypting visual assets from Web3 Storage</p>
-    </div>
+    <!-- 模組一：關於我 (IDENTITY) -->
+    <section id="about" class="flex flex-col lg:flex-row gap-10 mt-10 scroll-mt-28">
+      
+      <!-- 左側：數位身分投影 -->
+      <div class="lg:w-1/3 glass-card clip-corner-reverse p-1 relative flex flex-col items-center justify-center min-h-[400px] group">
+        <div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-cyber-cyan"></div>
+        <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-cyber-cyan"></div>
+        
+        <!-- 頭像區 (可替換為實際相片網址) -->
+        <div class="w-48 h-48 rounded-full border-2 border-dashed border-cyber-cyan/50 p-2 relative animate-float mb-6">
+          <div class="w-full h-full rounded-full bg-gradient-to-br from-cyber-purple/40 to-cyber-cyan/20 overflow-hidden flex items-center justify-center border border-cyber-cyan shadow-[0_0_20px_rgba(0,240,255,0.2)]">
+            <span class="text-4xl text-cyber-cyan opacity-50 font-black">USER</span>
+            <!-- 若有真實頭像，請解除下方註解並填入網址 -->
+            <!-- <img src="您的頭像網址" class="w-full h-full object-cover"> -->
+          </div>
+        </div>
 
-    <!-- 專案畫廊網格 -->
-    <div id="portfolio-grid" class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-10"></div>
+        <h1 class="text-3xl font-black text-white tracking-widest uppercase text-center">
+          <span class="text-cyber-cyan block text-sm mb-2">>>> DESIGN_ENTITY:</span>
+          HUI-QING CHEN
+        </h1>
+        <p class="text-cyber-pink tracking-widest mt-2 font-bold text-sm">GRAPHIC DESIGNER // VISUAL ARTIST</p>
+        
+        <div class="mt-6 flex gap-3">
+          <div class="bg-cyber-purple/20 border border-cyber-purple px-2 py-1 text-[10px] text-cyber-purple">LOC: TAIWAN_886</div>
+          <div class="bg-cyber-cyan/20 border border-cyber-cyan px-2 py-1 text-[10px] text-cyber-cyan">STATUS: CREATING</div>
+        </div>
+      </div>
+
+      <!-- 右側：技能數據與論述 -->
+      <div class="lg:w-2/3 flex flex-col gap-6">
+        <div class="glass-card clip-corner p-8">
+          <h2 class="text-xl font-bold text-cyber-cyan mb-4 tracking-widest border-b border-cyber-cyan/30 pb-2">>>> SYSTEM_LOG: BACKGROUND</h2>
+          <p class="text-gray-300 leading-relaxed font-sans text-lg">
+            擅長在理性網格與感性視覺之間尋找完美平衡。專注於品牌識別、視覺排版與數位媒體藝術。相信每一個像素都乘載著訊息，每一道色彩都能引發共鳴。致力於將抽象概念轉化為具備硬派視覺衝擊力的數位資產。
+          </p>
+        </div>
+
+        <div class="glass-card clip-corner p-8">
+          <h2 class="text-xl font-bold text-cyber-cyan mb-6 tracking-widest border-b border-cyber-cyan/30 pb-2">>>> CAPABILITIES_MATRIX</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- 技能條 1 -->
+            <div>
+              <div class="flex justify-between text-xs mb-1 text-white"><span class="tracking-widest">BRANDING (品牌識別)</span><span class="text-cyber-cyan">95%</span></div>
+              <div class="w-full h-2 bg-cyber-black border border-cyber-cyan/30"><div class="h-full bg-cyber-cyan shadow-[0_0_10px_#00f0ff]" style="width: 95%"></div></div>
+            </div>
+            <!-- 技能條 2 -->
+            <div>
+              <div class="flex justify-between text-xs mb-1 text-white"><span class="tracking-widest">UI/UX VISUAL (介面視覺)</span><span class="text-cyber-pink">88%</span></div>
+              <div class="w-full h-2 bg-cyber-black border border-cyber-pink/30"><div class="h-full bg-cyber-pink shadow-[0_0_10px_#ff007f]" style="width: 88%"></div></div>
+            </div>
+            <!-- 技能條 3 -->
+            <div>
+              <div class="flex justify-between text-xs mb-1 text-white"><span class="tracking-widest">TYPOGRAPHY (字體排印)</span><span class="text-cyber-purple">92%</span></div>
+              <div class="w-full h-2 bg-cyber-black border border-cyber-purple/30"><div class="h-full bg-cyber-purple shadow-[0_0_10px_#8a2be2]" style="width: 92%"></div></div>
+            </div>
+            <!-- 技能條 4 -->
+            <div>
+              <div class="flex justify-between text-xs mb-1 text-white"><span class="tracking-widest">ILLUSTRATION (插畫/合成)</span><span class="text-green-400">85%</span></div>
+              <div class="w-full h-2 bg-cyber-black border border-green-400/30"><div class="h-full bg-green-400 shadow-[0_0_10px_#4ade80]" style="width: 85%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模組二：專案展示庫 (ARCHIVE) -->
+    <section id="archive" class="scroll-mt-28">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-cyber-cyan/30 pb-4 gap-6">
+        <div>
+          <h2 class="text-4xl font-black neon-text uppercase tracking-widest">DATA_ARCHIVE</h2>
+          <p class="text-cyber-purple mt-2 tracking-widest text-sm">INDEXING SECURE VISUAL ASSETS...</p>
+        </div>
+        
+        <!-- 動態分類過濾器 (由 JS 自動生成) -->
+        <div id="filter-container" class="flex flex-wrap gap-3 justify-start md:justify-end">
+          <!-- 按鈕會動態插入這裡 -->
+        </div>
+      </div>
+
+      <!-- 讀取狀態 -->
+      <div id="status-display" class="flex flex-col items-center justify-center py-20 glass-card clip-corner">
+        <div class="w-16 h-16 border-4 border-cyber-cyan/20 border-t-cyber-cyan rounded-full animate-spin mb-6"></div>
+        <h2 class="text-xl font-black tracking-widest text-cyber-cyan animate-pulse">CONNECTING TO DATABASE...</h2>
+      </div>
+
+      <!-- 專案畫廊網格 -->
+      <div id="portfolio-grid" class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-10"></div>
+    </section>
+
   </main>
 
-  <!-- 全息投影 Lightbox (沉浸式檢視器) -->
+  <!-- 全息投影 Lightbox (保留原有功能) -->
   <div id="lightbox" class="fixed inset-0 z-50 hidden bg-cyber-black/95 backdrop-blur-xl p-4 md:p-8 overflow-y-auto flex items-center justify-center">
     <div class="w-full max-w-7xl glass-card clip-corner flex flex-col relative animate-float">
       
-      <!-- 視窗控制列 -->
       <div class="flex justify-between items-center p-4 border-b border-cyber-cyan/30 bg-white/5">
         <div class="flex items-center gap-3">
           <div class="w-2 h-2 bg-cyber-pink rounded-full shadow-[0_0_8px_#ff007f]"></div>
-          <span class="font-bold tracking-widest text-cyber-cyan text-xs md:text-sm">ASSET_VIEWER_v3.0</span>
+          <span id="lb-title-bar" class="font-bold tracking-widest text-cyber-cyan text-xs md:text-sm">ASSET_VIEWER_v3.0</span>
         </div>
         <button onclick="closeLightbox()" class="text-cyber-cyan hover:text-white hover:bg-cyber-pink/50 border border-cyber-cyan/30 px-4 py-1 text-sm tracking-widest transition-colors clip-corner">
           DISCONNECT [X]
         </button>
       </div>
 
-      <!-- 檢視器內容區 -->
       <div class="p-6 md:p-10 flex flex-col xl:flex-row gap-8 max-h-[80vh] overflow-y-auto cyber-scrollbar">
-        
-        <!-- 左側 HUD 資訊板 -->
         <div class="xl:w-1/3 flex flex-col gap-6">
           <div class="inline-block border border-cyber-purple text-cyber-purple px-3 py-1 text-xs tracking-widest w-fit bg-cyber-purple/10">
             CLASS: <span id="lb-category" class="text-white"></span>
           </div>
           <h2 id="lb-title" class="text-3xl md:text-5xl font-black uppercase neon-text leading-tight"></h2>
-          
           <div class="relative p-6 border border-cyber-cyan/20 bg-cyber-cyan/5 clip-corner mt-4">
-            <div class="absolute top-0 left-0 w-2 h-2 bg-cyber-cyan"></div>
-            <div class="absolute bottom-0 right-0 w-2 h-2 bg-cyber-cyan"></div>
             <p id="lb-desc" class="text-sm md:text-base text-gray-300 leading-relaxed whitespace-pre-wrap font-sans"></p>
           </div>
         </div>
-
-        <!-- 右側多圖垂直流 -->
         <div id="lb-gallery" class="xl:w-2/3 flex flex-col gap-6"></div>
       </div>
     </div>
   </div>
 
   <script>
-    // ★ 請在此填寫您的 Public JSON API 網址
+    // ★ 請務必替換為您的 API 網址
     const API_URL = "https://script.google.com/macros/s/AKfycbyTNadGAs8vcQWzYJmQcGK-UqhYbSAPtOnEy4hFn7DQnEn6Haj3iWhVvrI1PjJKEAED2w/exec"; 
     
     let globalData = [];
-
-    // 模擬區塊鏈高度跳動
-    setInterval(() => {
-      const el = document.getElementById('block-height');
-      if(el) el.innerText = '#' + Math.floor(1000000 + Math.random() * 9000000);
-    }, 2500);
+    let currentFilter = 'ALL';
 
     window.onload = async function() {
       const statusDisplay = document.getElementById('status-display');
@@ -187,29 +253,68 @@
         
         globalData = data.reverse(); 
         statusDisplay.style.display = 'none';
-        renderGrid(globalData);
+        
+        generateFilters(); // 建立分類按鈕
+        renderGrid(globalData); // 初次渲染所有作品
       } catch (error) {
         statusDisplay.innerHTML = `
-          <div class="border border-cyber-pink bg-cyber-pink/10 p-8 clip-corner text-center max-w-lg">
-            <h2 class="neon-text-pink text-3xl font-black mb-4">NODE_SYNC_FAILED</h2>
-            <p class="text-white/80 text-sm">無法連線至去中心化資料庫。請確認 API 節點狀態。</p>
-            <p class="text-cyber-pink text-xs mt-4">ERR_CODE: ${error.message}</p>
-          </div>
+          <h2 class="neon-text-pink text-2xl font-black mb-2">NODE_SYNC_FAILED</h2>
+          <p class="text-white/80 text-sm">ERROR: ${error.message}</p>
         `;
       }
     };
+
+    // 核心功能：動態生成分類過濾器
+    function generateFilters() {
+      const filterContainer = document.getElementById('filter-container');
+      filterContainer.innerHTML = '';
+
+      // 從資料庫中萃取所有獨一無二的「分類」
+      const categories = ['ALL', ...new Set(globalData.map(item => item.分類).filter(Boolean))];
+
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.textContent = `[ ${cat} ]`;
+        btn.className = `filter-btn text-xs md:text-sm px-4 py-2 border border-cyber-cyan/30 text-gray-400 hover:text-cyber-cyan hover:border-cyber-cyan transition-all clip-corner tracking-widest ${cat === 'ALL' ? 'active' : ''}`;
+        
+        btn.onclick = (e) => {
+          // 更新按鈕視覺狀態
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          
+          // 執行資料篩選
+          currentFilter = cat;
+          const filteredData = cat === 'ALL' ? globalData : globalData.filter(p => p.分類 === cat);
+          
+          // 重新渲染網格（加入簡單淡出淡入效果）
+          const grid = document.getElementById('portfolio-grid');
+          grid.style.opacity = 0;
+          setTimeout(() => {
+            renderGrid(filteredData);
+            grid.style.opacity = 1;
+          }, 300);
+        };
+        filterContainer.appendChild(btn);
+      });
+    }
 
     function renderGrid(projects) {
       const grid = document.getElementById('portfolio-grid');
       grid.innerHTML = ''; 
       
-      projects.forEach((p, index) => {
-        // 卡片容器 (玻璃擬物 + 裁切角)
-        const card = document.createElement('div');
-        card.className = "glass-card clip-corner flex flex-col cursor-pointer group";
-        card.onclick = () => openLightbox(index);
+      if(projects.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-20 text-cyber-pink tracking-widest border border-cyber-pink/30 glass-card">NO_DATA_FOUND_IN_THIS_SECTOR</div>`;
+        return;
+      }
 
-        // 影像輪播區塊 (橫向滑動)
+      projects.forEach((p) => {
+        // 為了在 Lightbox 中找到正確原始索引，透過名稱回推 globalData index
+        const originalIndex = globalData.findIndex(item => item.ID === p.ID || item.專案名稱 === p.專案名稱);
+
+        const card = document.createElement('div');
+        card.className = "glass-card clip-corner flex flex-col cursor-pointer group transition-all duration-300 transform";
+        card.onclick = () => openLightbox(originalIndex);
+
         const galleryWrap = document.createElement('div');
         galleryWrap.className = "w-full flex cyber-scrollbar border-b border-cyber-cyan/30 aspect-video md:aspect-[16/10]";
         
@@ -217,13 +322,11 @@
           p.images.forEach((imgUrl, i) => {
             const imgContainer = document.createElement('div');
             imgContainer.className = "w-full h-full shrink-0 snap-center relative";
-            
             const img = document.createElement('img');
             img.src = imgUrl;
             img.className = "w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500";
             img.loading = "lazy";
             
-            // 圖片數量指示器 (HUD 風格)
             const indicator = document.createElement('div');
             indicator.className = "absolute bottom-3 right-3 bg-cyber-black/80 border border-cyber-cyan/50 text-cyber-cyan text-[10px] px-2 py-1 backdrop-blur-sm font-bold tracking-widest";
             indicator.textContent = `IMG [ ${i + 1} / ${p.images.length} ]`;
@@ -232,33 +335,21 @@
             imgContainer.appendChild(indicator);
             galleryWrap.appendChild(imgContainer);
           });
-        } else {
-          // 無圖片的防呆畫面
-          galleryWrap.innerHTML = `<div class="w-full h-full flex items-center justify-center text-cyber-cyan/50 text-sm tracking-widest bg-cyber-black/50">NO_ASSET_FOUND</div>`;
         }
 
-        // 資訊區塊
         const infoWrap = document.createElement('div');
         infoWrap.className = "p-6 flex flex-col gap-3 relative overflow-hidden";
         
-        // 分類標籤
         const catEl = document.createElement('div');
         catEl.className = "text-cyber-purple text-xs font-bold tracking-widest uppercase mb-1";
         catEl.textContent = `> ${p.分類}`; 
 
-        // 專案名稱
         const titleEl = document.createElement('h3');
         titleEl.className = "text-xl font-bold uppercase text-white tracking-wider truncate group-hover:text-cyber-cyan transition-colors";
         titleEl.textContent = p.專案名稱;
 
-        // 假資料指紋 (增加 Tech 氛圍)
-        const hashEl = document.createElement('div');
-        hashEl.className = "text-[10px] text-gray-600 mt-2 truncate opacity-50";
-        hashEl.textContent = `HASH: 0x${Math.random().toString(16).substring(2, 14).toUpperCase()}...`;
-
         infoWrap.appendChild(catEl);
         infoWrap.appendChild(titleEl);
-        infoWrap.appendChild(hashEl);
         
         card.appendChild(galleryWrap);
         card.appendChild(infoWrap);
@@ -267,12 +358,14 @@
     }
 
     function openLightbox(index) {
+      if(index < 0) return;
       const p = globalData[index];
       const lb = document.getElementById('lightbox');
       
       document.getElementById('lb-category').textContent = p.分類;
       document.getElementById('lb-title').textContent = p.專案名稱;
       document.getElementById('lb-desc').textContent = p.描述;
+      document.getElementById('lb-title-bar').textContent = `ASSET_VIEWER: ${p.專案名稱}.exe`;
       
       const gallery = document.getElementById('lb-gallery');
       gallery.innerHTML = ''; 
@@ -281,18 +374,10 @@
         p.images.forEach(imgUrl => {
           const imgWrap = document.createElement('div');
           imgWrap.className = "relative p-2 border border-cyber-cyan/20 bg-cyber-black/50";
-          
           const img = document.createElement('img');
           img.src = imgUrl;
           img.className = "w-full object-contain filter contrast-125";
           img.loading = "lazy";
-          
-          // 添加裝飾性十字準星
-          const crosshair = `<div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyber-cyan/50"></div>
-                             <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyber-cyan/50"></div>
-                             <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyber-cyan/50"></div>
-                             <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyber-cyan/50"></div>`;
-          imgWrap.innerHTML = crosshair;
           imgWrap.appendChild(img);
           gallery.appendChild(imgWrap);
         });
