@@ -4,13 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-13QVG78JZL"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-13QVG78JZL');
 </script>
 
@@ -18,7 +16,8 @@
 <meta name="description" content="品牌識別、介面設計與視覺排版——用設計語言說一個有溫度的故事。">
 <meta property="og:title" content="Hui — Digital Archive">
 <meta property="og:description" content="專注於品牌識別與視覺設計的創作者，探索理性網格與感性視覺的完美平衡。">
-<meta property="og:image" content="https://mmmixhui.github.io/portfolio/og-image.jpg"> <meta property="og:url" content="https://mmmixhui.github.io/portfolio">
+<meta property="og:image" content="https://mmmixhui.github.io/portfolio/og-image.jpg"> 
+<meta property="og:url" content="https://mmmixhui.github.io/portfolio">
 <meta property="og:type" content="website">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -44,7 +43,7 @@
   ::selection { background-color: var(--warm); color: var(--bg); }
   ::-moz-selection { background-color: var(--warm); color: var(--bg); }
 
-  /* ── 游標智慧語意化 (Smart Cursor) ── */
+  /* ── UI/UX 優化：智慧反差色語意游標 ── */
   @media (pointer: fine) {
     .custom-cursor {
       position: fixed; top: 0; left: 0; width: 12px; height: 12px;
@@ -54,7 +53,7 @@
     }
     .custom-cursor.hover-view { width: 65px; height: 65px; }
     .custom-cursor.hover-view::after {
-      content: attr(data-cursor-text); /* 讀取 data-cursor-text 的變數 */
+      content: attr(data-cursor-text);
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
       color: #000000; font-size: 10px; letter-spacing: 0.15em; font-weight: 500;
     }
@@ -103,7 +102,8 @@
   .filter-btn { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; border: 0.5px solid rgba(26,24,20,.25); background: transparent; padding: .45rem 1.2rem; transition: all .2s; color: var(--muted); cursor: none; }
   .filter-btn:hover, .filter-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   
-  .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+  /* ── 🎬 高級骨架屏載入特效 ── */
+  .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; opacity: 1; transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
   .skeleton-card { background: var(--bg); border: 0.5px solid rgba(26,24,20,.05); overflow: hidden; }
   .skeleton-thumb { aspect-ratio: 4/3; background: linear-gradient(90deg, var(--faint) 25%, #e6e3de 50%, var(--faint) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite linear; }
   .skeleton-meta { padding: 1.1rem 1.25rem; }
@@ -111,8 +111,8 @@
   .skeleton-line.short { width: 40%; }
   @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-  .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-  .work-card { background: var(--bg); overflow: hidden; transition: transform .3s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); cursor: none;}
+  .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; opacity: 0; transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+  .work-card { background: var(--bg); overflow: hidden; opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); cursor: none;}
   .work-card.revealed { opacity: 1; transform: translateY(0); }
   .work-card:hover { transform: translateY(-6px); }
   
@@ -135,25 +135,22 @@
   .lb-close { background: none; border: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); transition: color 0.2s; cursor: none;}
   .lb-close:hover { color: var(--warm); }
   
-  /* 1. 浮動玻璃按鈕：向內縮 3vw，增加為 64px 大面積實體按鈕 */
   .lb-nav-btn {
     position: fixed; top: 50%; transform: translateY(-50%);
     width: 64px; height: 64px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(26,24,20,.1);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(26,24,20,.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06); backdrop-filter: blur(8px);
     display: flex; align-items: center; justify-content: center;
     font-size: 1.5rem; color: var(--ink); z-index: 210;
     cursor: none; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s, color 0.3s;
   }
-  .lb-info { position: sticky; top: 8rem; align-self: start; display: flex; flex-direction: column; justify-content: space-between; min-height: calc(100vh - 16rem); }  .lb-prev { left: 3vw; } 
-  .lb-next { right: 3vw; }
+  .lb-nav-btn:hover { background: var(--ink); color: var(--bg); transform: translateY(-50%) scale(1.08); }
+  .lb-prev { left: 3vw; } .lb-next { right: 3vw; }
   
   .lb-content { max-width: 1300px; margin: 0 auto; padding: 4rem 3vw; display: grid; grid-template-columns: 1fr 2.2fr; gap: 5vw; }
   
-  /* 2. 脈絡內嵌導覽：直接做在閱讀資訊區塊最下方 */
-  .lb-info { position: sticky; top: 8rem; align-self: start; display: flex; flex-col; justify-content: space-between; min-height: calc(100vh - 16rem); }
+  /* 脈絡內嵌導覽 */
+  .lb-info { position: sticky; top: 8rem; align-self: start; display: flex; flex-direction: column; justify-content: space-between; min-height: calc(100vh - 16rem); }
   .lb-info-top { flex: 1; }
   .lb-category { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm); margin-bottom: 1rem; display: block; }
   .lb-title { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; line-height: 1.2; margin-bottom: 1.5rem; }
@@ -169,9 +166,14 @@
   }
   .lb-inline-nav button:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
-  .lb-gallery { display: flex; flex-direction: column; gap: 2rem; }
-  .lb-gallery img { width: 100%; height: auto; background: var(--faint); opacity: 0; transition: opacity 0.5s ease; border: 0.5px solid rgba(26,24,20,.05); }
-  .lb-gallery img.loaded { opacity: 1; }
+  /* ── 平面雜誌級邊欄微字體圖說排版模組 ── */
+  .lb-gallery { display: flex; flex-direction: column; gap: 4rem; }
+  .lb-gallery-item { display: flex; flex-direction: column; gap: 0.8rem; }
+  .lb-gallery-item img { width: 100%; height: auto; background: var(--faint); opacity: 0; transition: opacity 0.5s ease; border: 0.5px solid rgba(26,24,20,.05); }
+  .lb-gallery-item img.loaded { opacity: 1; }
+  
+  .lb-image-caption { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--muted); text-align: right; width: 100%; max-width: 450px; align-self: flex-end; opacity: 0.4; transition: opacity 0.3s ease; font-weight: 300; }
+  .lb-gallery-item:hover .lb-image-caption { opacity: 1; }
 
   /* ── ABOUT & CONTACT ── */
   #about { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
@@ -193,16 +195,8 @@
   .social-links a:hover { color: var(--warm); }
   footer { padding: 1.5rem 3rem; font-size: .72rem; color: var(--muted); display: flex; justify-content: space-between; border-top: 0.5px solid rgba(26,24,20,.1); }
 
-  @media (max-width: 900px) { 
-    .lb-content { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.5rem; } 
-    .lb-info { position: static; min-height: auto; } 
-    .lb-nav-btn { display: none; /* 手機隱藏兩側浮動按鈕，依賴滑動與內嵌按鈕 */ } 
-  }
-  @media (max-width: 768px) { 
-    nav { padding: 1rem 1.5rem; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } 
-    #about { grid-template-columns: 1fr; gap: 3rem; } .about-img-frame { aspect-ratio: 4/3; } 
-    footer { flex-direction: column; gap: .5rem; } .lb-header { padding: 1rem 1.5rem; } 
-  }
+  @media (max-width: 900px) { .lb-content { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.5rem; } .lb-info { position: static; min-height: auto; } .lb-nav-btn { display: none; } }
+  @media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } #about { grid-template-columns: 1fr; gap: 3rem; } .about-img-frame { aspect-ratio: 4/3; } footer { flex-direction: column; gap: .5rem; } .lb-header { padding: 1rem 1.5rem; } }
 </style>
 </head>
 <body>
@@ -251,7 +245,7 @@
       <h2>HUI</h2>
       <p>一位專注於品牌識別與視覺設計的創作者，目前居住在台北。我相信每個品牌都有自己獨特的語言，我的工作是幫助它找到那個聲音。</p>
       <p>我擅長將複雜的概念轉化為清晰而有溫度的視覺語言，從 Logo 設計、品牌系統到數位介面與排版，每個細節都是一次刻意的選擇。</p>
-      <p>目前接受品牌識別、視覺排版及相關設計的委託案，歡迎聯繫洽談。</p>
+      <p>目前接受 brand identity、視覺排版及相關設計的委託案，歡迎聯繫洽談。</p>
       <div class="skills-list">
         <span class="skill-tag">Brand Identity</span><span class="skill-tag">UI/UX Visual</span><span class="skill-tag">Typography</span>
         <span class="skill-tag">Editorial</span><span class="skill-tag">Illustration</span><span class="skill-tag">Illustrator</span>
@@ -304,12 +298,28 @@
 </div>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbyTNadGAs8vcQWzYJmQcGK-UqhYbSAPtOnEy4hFn7DQnEn6Haj3iWhVvrI1PjJKEAED2w/exec"; 
+  const API_URL = "https://script.google.com/macros/s/AKfycby-UP0XRfUTr_mORwwHvb56qtOwCzjyWN4rIPZiQbVO3Zu6uof2cUKpWiZ31g2rKzVmKw/exec"; 
   let globalData = [];
   let currentProjectIndex = -1;
   let activeFilteredData = [];
 
-  // ── 3. 自訂游標綁定與語意轉換 ──
+  // ── 🛡️ 智能解鎖防線：精準提取檔案唯一識別碼，回歸最高相容、受 CDN 保护的快取格式 ──
+  function cleanAndNormalizeUrl(rawUrl) {
+    if (!rawUrl) return '';
+    let cleanUrl = rawUrl.toString().trim();
+    
+    const idMatch = cleanUrl.match(/id=([-\w]{25,35})/) || 
+                    cleanUrl.match(/\/d\/([-\w]{25,35})/) || 
+                    cleanUrl.match(/picture\/[01]([-\w]{25,35})/);
+                    
+    if (idMatch && idMatch[1]) {
+      return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w2000`;
+    }
+    
+    return cleanUrl;
+  }
+
+  // ── 自訂游標綁定與語意轉換 ──
   const customCursor = document.getElementById('custom-cursor');
   if (window.matchMedia("(pointer: fine)").matches) {
     window.addEventListener('mousemove', e => {
@@ -320,12 +330,10 @@
   
   function bindCursorEvents() {
     document.querySelectorAll('a, button, .work-card').forEach(el => {
-      // 避免重複綁定
       if (el.dataset.cursorBound) return;
       el.dataset.cursorBound = "true";
       
       el.addEventListener('mouseenter', () => {
-        // 動態抓取每個按鈕專屬的提示詞，若無則預設為 VIEW
         const cursorText = el.getAttribute('data-cursor') || 'VIEW';
         customCursor.setAttribute('data-cursor-text', cursorText);
         customCursor.classList.add('hover-view');
@@ -349,41 +357,62 @@
     if (window.scrollY < window.innerHeight) document.getElementById('heroBg').style.transform = `translateY(${window.scrollY * 0.2}px)`;
   });
 
+  // ── 🚀 核心優化：清洗空白幽靈列 + 骨架屏平滑淡出過渡 ──
   window.onload = async function() {
     const statusDisplay = document.getElementById('status-display');
+    const gridEl = document.getElementById('worksGrid');
     try {
       const response = await fetch(API_URL);
       if (!response.ok) throw new Error('Network Error');
-      const data = await response.json();
-      if (data.error) throw new Error(data.error);
+      const payload = await response.json();
+      if (payload.error) throw new Error(payload.error);
       
-      globalData = data.reverse(); 
-      activeFilteredData = [...globalData]; 
-      statusDisplay.style.display = 'none';
+      const orderedCategories = payload.orderedCategories || [];
+      const rawProjects = payload.projects || [];
       
-      generateFilters(); 
-      renderGrid(globalData); 
-      bindCursorEvents(); 
+      // 🛡️ 一級清洗防線：自動過濾掉資料庫中不小心中斷、完全沒有專案名稱與圖資的空白列
+      globalData = rawProjects.filter(p => {
+        const hasTitle = p.專案名稱 && p.專案名稱.toString().trim() !== "";
+        const hasImages = p.images && p.images.length > 0;
+        return hasTitle || hasImages;
+      }).reverse(); // 倒序排列作品專案本身
+
+      activeFilteredData = [...globalData];
+      
+      // 🎬 骨架屏與網格的平滑淡入動畫控制
+      statusDisplay.style.opacity = '0';
+      setTimeout(() => {
+        statusDisplay.style.display = 'none';
+        generateFilters(orderedCategories); 
+        renderGrid(globalData); 
+        gridEl.style.opacity = '1'; // 開啟前端網格漸顯
+        bindCursorEvents(); 
+      }, 400);
+
     } catch (error) {
       statusDisplay.className = ""; statusDisplay.style.textAlign = "center";
       statusDisplay.innerHTML = `無法載入作品集資料。 (${error.message})`;
     }
   };
 
-  function generateFilters() {
+  function generateFilters(orderedCategories) {
     const filterContainer = document.getElementById('filter-container');
     filterContainer.innerHTML = '';
     
-    let allCategories = [];
-    globalData.forEach(item => {
-      if(item.分類) item.分類.split(',').forEach(c => allCategories.push(c.trim()));
-    });
-    const categories = ['ALL', ...new Set(allCategories.filter(Boolean))];
+    let categories = ['ALL'];
+    if (orderedCategories && orderedCategories.length > 0) {
+      categories = ['ALL', ...orderedCategories];
+    } else {
+      let fallback = [];
+      globalData.forEach(item => {
+        if(item.分類) item.分類.split(',').forEach(c => fallback.push(c.trim()));
+      });
+      categories = ['ALL', ...new Set(fallback.filter(Boolean))];
+    }
 
     categories.forEach(cat => {
       const btn = document.createElement('button');
       btn.textContent = cat; btn.className = `filter-btn ${cat === 'ALL' ? 'active' : ''}`;
-      // 為篩選按鈕也加上游標語意
       btn.setAttribute('data-cursor', 'FILTER');
       
       btn.onclick = (e) => {
@@ -422,46 +451,80 @@
 
     projects.forEach((p, idx) => {
       const card = document.createElement('div'); card.className = "work-card";
+      
+      // idx 必須與 activeFilteredData 對齊
       card.onclick = () => openLightbox(idx);
-      card.setAttribute('data-cursor', 'VIEW'); // 卡片游標提示
+      card.setAttribute('data-cursor', 'VIEW');
 
-      const coverImage = (p.images && p.images.length > 0) ? p.images[0] : '';
+      let coverImage = '';
+      if (p.images && Array.isArray(p.images) && p.images.length > 0) {
+        let rawCover = typeof p.images[0] === 'object' ? p.images[0].url : p.images[0];
+        coverImage = cleanAndNormalizeUrl(rawCover);
+      }
+
       card.innerHTML = `
         <div class="work-thumb">
-          ${coverImage ? `<img src="${coverImage}" onload="this.classList.add('loaded')" alt="${p.專案名稱}">` : `<div class="work-thumb-placeholder">No Image</div>`}
+          ${coverImage ? `<img src="${coverImage}" onload="this.classList.add('loaded')" alt="${p.專案名稱 || 'Untitled'}">` : `<div class="work-thumb-placeholder">No Image</div>`}
           <div class="work-overlay"><span class="work-overlay-text">View Project</span></div>
         </div>
-        <div class="work-meta"><p class="work-title">${p.專案名稱}</p><p class="work-tag">${p.分類}</p></div>
+        <div class="work-meta"><p class="work-title">${p.專案名稱 || 'Untitled'}</p><p class="work-tag">${p.分類 || ''}</p></div>
       `;
       grid.appendChild(card);
       cardObserver.observe(card); 
     });
   }
 
+  // ── 🔓 開啟檢視器：徹底移除錯誤排序干擾，100% 依原封存順序（數字小在前）直覺直出 ──
   function openLightbox(index) {
     if(index < 0 || index >= activeFilteredData.length) return;
     currentProjectIndex = index;
     const p = activeFilteredData[index]; 
     const lb = document.getElementById('lightbox');
     
-    document.getElementById('lb-category').textContent = p.分類;
-    document.getElementById('lb-title').textContent = p.專案名稱;
-    document.getElementById('lb-desc').textContent = p.描述;
+    document.getElementById('lb-category').textContent = p.分類 || '';
+    document.getElementById('lb-title').textContent = p.專案名稱 || 'Untitled';
+    document.getElementById('lb-desc').textContent = p.描述 || '';
     
-    // GA4 追蹤
     if (typeof gtag === 'function') {
-      gtag('event', 'view_project', { 'project_title': p.專案名稱, 'project_category': p.分類 });
+      gtag('event', 'view_project', { 'project_title': p.專案名稱 || 'Untitled', 'project_category': p.分類 || '' });
     }
     
     const gallery = document.getElementById('lb-gallery'); gallery.innerHTML = ''; 
-    if (p.images) {
-      p.images.forEach(imgUrl => {
-        const img = document.createElement('img'); img.src = imgUrl; 
-        img.onload = () => img.classList.add('loaded'); 
-        img.loading = "lazy"; gallery.appendChild(img);
+    
+    // 🛡️ 雙向多態相容性清洗防線
+    if (p.images && Array.isArray(p.images) && p.images.length > 0) {
+      
+      // 💡 終極修正關鍵：直接使用原始封存的順序（不呼叫任何會翻轉或顛倒順序的 .sort()），直接渲染！
+      p.images.forEach(asset => {
+        const itemWrapper = document.createElement('div'); itemWrapper.className = 'lb-gallery-item';
+        
+        let rawUrl = '';
+        let imgCaption = '';
+        
+        if (typeof asset === 'object' && asset !== null) {
+          rawUrl = asset.url || '';
+          imgCaption = asset.desc || '';
+        } else if (asset) {
+          rawUrl = asset.toString();
+          imgCaption = '';
+        }
+        
+        if (!rawUrl) return; 
+        const imgUrl = cleanAndNormalizeUrl(rawUrl);
+        
+        let innerHTML = `<img src="${imgUrl}" onload="this.classList.add('loaded')" loading="lazy">`;
+        if (imgCaption && imgCaption.trim() !== "") {
+          innerHTML += `<div class="lb-image-caption">${imgCaption}</div>`;
+        }
+        
+        itemWrapper.innerHTML = innerHTML; 
+        gallery.appendChild(itemWrapper);
       });
+    } else {
+      gallery.innerHTML = `<div style="text-align: center; padding: 4rem 2rem; color: var(--muted); font-style: italic; width:100%;">此專案內暫無作品圖片。</div>`;
     }
-    lb.classList.add('active'); document.body.style.overflow = 'hidden'; lb.scrollTop = 0; 
+    
+    lb.classList.add('active'); document.body.style.overflow = 'hidden'; lb.scrollTop = 0; bindCursorEvents(); 
   }
 
   function navigateLightbox(direction) {
@@ -481,17 +544,13 @@
     if (e.key === 'ArrowRight') navigateLightbox(1);
   });
 
-  // 觸控滑動切換
-  let touchStartX = 0;
-  let touchEndX = 0;
+  let touchStartX = 0, touchEndX = 0;
   const lightboxElement = document.getElementById('lightbox');
-  
   lightboxElement.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
   lightboxElement.addEventListener('touchend', e => {
     touchEndX = e.changedTouches[0].screenX;
-    const swipeThreshold = 50; 
-    if (touchEndX < touchStartX - swipeThreshold) navigateLightbox(1); 
-    if (touchEndX > touchStartX + swipeThreshold) navigateLightbox(-1); 
+    if (touchEndX < touchStartX - 50) navigateLightbox(1); 
+    if (touchEndX > touchStartX + 50) navigateLightbox(-1); 
   }, {passive: true});
 
   function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = 'auto'; }
