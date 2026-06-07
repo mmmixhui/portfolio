@@ -15,8 +15,8 @@
 </script>
 
 <title>Hui — Graphic Designer & Visual Artist</title>
-<meta name="description" content="品牌識別、介面設計與視覺排版——在理性網格與感性視覺間，用設計語言說一個有溫度的故事。">
-<meta property="og:title" content="Hui-Qing Chen — Digital Archive">
+<meta name="description" content="品牌識別、介面設計與視覺排版——用設計語言說一個有溫度的故事。">
+<meta property="og:title" content="Hui — Digital Archive">
 <meta property="og:description" content="專注於品牌識別與視覺設計的創作者，探索理性網格與感性視覺的完美平衡。">
 <meta property="og:image" content="https://mmmixhui.github.io/portfolio/og-image.jpg"> <meta property="og:url" content="https://mmmixhui.github.io/portfolio">
 <meta property="og:type" content="website">
@@ -30,52 +30,37 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --ink: #1a1814;
-    --muted: #7a7671;
-    --faint: #f0ede8;
-    --warm: #c8a87a;
-    --bg: #faf9f7;
-    --serif: 'Cormorant Garamond', Georgia, serif;
-    --sans: 'DM Sans', system-ui, sans-serif;
+    --ink: #1a1814; --muted: #7a7671; --faint: #f0ede8; --warm: #c8a87a; --bg: #faf9f7;
+    --serif: 'Cormorant Garamond', Georgia, serif; --sans: 'DM Sans', system-ui, sans-serif;
   }
 
   html { scroll-behavior: smooth; }
   
   body {
     font-family: var(--sans); background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.7;
-    /* 隱藏原生游標 (僅限電腦端) */
     @media (pointer: fine) { cursor: none; }
   }
 
-  /* ── 平面設計師優化：專屬反白選取色 ── */
   ::selection { background-color: var(--warm); color: var(--bg); }
   ::-moz-selection { background-color: var(--warm); color: var(--bg); }
 
-  /* ── UI/UX 優化：智慧反差色游標 (Mix-Blend-Mode) ── */
+  /* ── 游標智慧語意化 (Smart Cursor) ── */
   @media (pointer: fine) {
     .custom-cursor {
       position: fixed; top: 0; left: 0; width: 12px; height: 12px;
-      /* 改為白色底，並使用 difference 達成自動變色 */
-      background-color: #ffffff; 
-      mix-blend-mode: difference;
-      border-radius: 50%;
-      pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%);
+      background-color: #ffffff; mix-blend-mode: difference; border-radius: 50%;
+      pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
       transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    .custom-cursor.hover-view {
-      width: 60px; height: 60px; 
-      /* 移除特定顏色，保持純白來做完美差值運算 */
-    }
+    .custom-cursor.hover-view { width: 65px; height: 65px; }
     .custom-cursor.hover-view::after {
-      content: 'VIEW'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      /* 黑色文字在 difference 模式下，會與白色外圈產生完美對比 */
-      color: #000000; 
-      font-size: 10px; letter-spacing: 0.1em; font-weight: 500;
+      content: attr(data-cursor-text); /* 讀取 data-cursor-text 的變數 */
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      color: #000000; font-size: 10px; letter-spacing: 0.15em; font-weight: 500;
     }
-    /* 確保所有可點擊元素沒有原生游標 */
     a, button, .work-card, input, textarea { cursor: none !important; }
   }
+  @media (pointer: coarse) { .custom-cursor { display: none; } }
 
   /* ── SMART NAV ── */
   nav {
@@ -102,7 +87,7 @@
   .hero-sub { font-size: .95rem; color: var(--muted); max-width: 420px; margin: 0 auto 3rem; line-height: 1.8; }
 
   .btn {
-    display: inline-block; padding: .75rem 2.2rem; border: 1px solid var(--ink); font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; text-decoration: none; color: var(--ink); transition: background .2s, color .2s; cursor: pointer;
+    display: inline-block; padding: .75rem 2.2rem; border: 1px solid var(--ink); font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; text-decoration: none; color: var(--ink); transition: background .2s, color .2s; cursor: none;
   }
   .btn:hover { background: var(--ink); color: var(--bg); }
   .btn-ghost { border-color: rgba(26,24,20,.3); color: var(--muted); margin-left: 1rem; }
@@ -115,7 +100,7 @@
   
   #works { background: var(--faint); min-height: 60vh; }
   .filter-bar { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
-  .filter-btn { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; border: 0.5px solid rgba(26,24,20,.25); background: transparent; padding: .45rem 1.2rem; cursor: pointer; transition: all .2s; color: var(--muted); }
+  .filter-btn { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; border: 0.5px solid rgba(26,24,20,.25); background: transparent; padding: .45rem 1.2rem; transition: all .2s; color: var(--muted); cursor: none; }
   .filter-btn:hover, .filter-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   
   .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
@@ -127,7 +112,7 @@
   @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
   .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-  .work-card { background: var(--bg); overflow: hidden; transition: transform .3s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+  .work-card { background: var(--bg); overflow: hidden; transition: transform .3s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); cursor: none;}
   .work-card.revealed { opacity: 1; transform: translateY(0); }
   .work-card:hover { transform: translateY(-6px); }
   
@@ -142,23 +127,50 @@
   .work-title { font-size: .95rem; font-weight: 500; margin-bottom: .25rem; }
   .work-tag { font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--warm); }
 
-  /* ── LIGHTBOX ── */
+  /* ── 燈箱優化 (LIGHTBOX) ── */
   #lightbox { position: fixed; inset: 0; z-index: 200; background: rgba(250, 249, 247, 0.99); overflow-y: auto; display: none; opacity: 0; transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
   #lightbox.active { display: block; opacity: 1; }
-  .lb-header { position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; background: var(--bg); border-bottom: 0.5px solid rgba(26,24,20,.1); }
-  .lb-close { background: none; border: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); transition: color 0.2s; }
-  .lb-close:hover { color: var(--warm); }
-  .lb-nav-btn { position: fixed; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 2.5rem; color: var(--ink); font-family: var(--serif); z-index: 210; opacity: 0.3; transition: opacity 0.2s, color 0.2s; padding: 2rem 1rem; user-select: none; }
-  .lb-nav-btn:hover { opacity: 1; color: var(--warm); }
-  .lb-prev { left: 1rem; } .lb-next { right: 1rem; }
   
-  .lb-content { max-width: 1200px; margin: 0 auto; padding: 4rem 3rem; display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; }
-  .lb-info { position: sticky; top: 8rem; align-self: start; }
+  .lb-header { position: sticky; top: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; background: rgba(250,249,247,.95); backdrop-filter: blur(8px); border-bottom: 0.5px solid rgba(26,24,20,.1); }
+  .lb-close { background: none; border: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); transition: color 0.2s; cursor: none;}
+  .lb-close:hover { color: var(--warm); }
+  
+  /* 1. 浮動玻璃按鈕：向內縮 3vw，增加為 64px 大面積實體按鈕 */
+  .lb-nav-btn {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(26,24,20,.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; color: var(--ink); z-index: 210;
+    cursor: none; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s, color 0.3s;
+  }
+  .lb-info { position: sticky; top: 8rem; align-self: start; display: flex; flex-direction: column; justify-content: space-between; min-height: calc(100vh - 16rem); }  .lb-prev { left: 3vw; } 
+  .lb-next { right: 3vw; }
+  
+  .lb-content { max-width: 1300px; margin: 0 auto; padding: 4rem 3vw; display: grid; grid-template-columns: 1fr 2.2fr; gap: 5vw; }
+  
+  /* 2. 脈絡內嵌導覽：直接做在閱讀資訊區塊最下方 */
+  .lb-info { position: sticky; top: 8rem; align-self: start; display: flex; flex-col; justify-content: space-between; min-height: calc(100vh - 16rem); }
+  .lb-info-top { flex: 1; }
   .lb-category { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm); margin-bottom: 1rem; display: block; }
   .lb-title { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; line-height: 1.2; margin-bottom: 1.5rem; }
-  .lb-desc { color: var(--muted); line-height: 1.8; font-size: 0.95rem; white-space: pre-wrap; }
+  .lb-desc { color: var(--muted); line-height: 1.8; font-size: 0.95rem; white-space: pre-wrap; margin-bottom: 3rem;}
+  
+  .lb-inline-nav {
+    display: flex; gap: 1rem; margin-top: auto; padding-top: 2rem; border-top: 0.5px solid rgba(26,24,20,.1); width: 100%;
+  }
+  .lb-inline-nav button {
+    flex: 1; padding: 1rem 0; background: transparent; border: 1px solid rgba(26,24,20,.2);
+    font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink); transition: all 0.3s ease; cursor: none; text-align: center;
+  }
+  .lb-inline-nav button:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
   .lb-gallery { display: flex; flex-direction: column; gap: 2rem; }
-  .lb-gallery img { width: 100%; height: auto; background: var(--faint); opacity: 0; transition: opacity 0.5s ease; }
+  .lb-gallery img { width: 100%; height: auto; background: var(--faint); opacity: 0; transition: opacity 0.5s ease; border: 0.5px solid rgba(26,24,20,.05); }
   .lb-gallery img.loaded { opacity: 1; }
 
   /* ── ABOUT & CONTACT ── */
@@ -181,8 +193,16 @@
   .social-links a:hover { color: var(--warm); }
   footer { padding: 1.5rem 3rem; font-size: .72rem; color: var(--muted); display: flex; justify-content: space-between; border-top: 0.5px solid rgba(26,24,20,.1); }
 
-  @media (max-width: 900px) { .lb-content { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.5rem; } .lb-info { position: static; } .lb-nav-btn { display: none; } }
-  @media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } #about { grid-template-columns: 1fr; gap: 3rem; } .about-img-frame { aspect-ratio: 4/3; } footer { flex-direction: column; gap: .5rem; } .lb-header { padding: 1rem 1.5rem; } }
+  @media (max-width: 900px) { 
+    .lb-content { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.5rem; } 
+    .lb-info { position: static; min-height: auto; } 
+    .lb-nav-btn { display: none; /* 手機隱藏兩側浮動按鈕，依賴滑動與內嵌按鈕 */ } 
+  }
+  @media (max-width: 768px) { 
+    nav { padding: 1rem 1.5rem; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } 
+    #about { grid-template-columns: 1fr; gap: 3rem; } .about-img-frame { aspect-ratio: 4/3; } 
+    footer { flex-direction: column; gap: .5rem; } .lb-header { padding: 1rem 1.5rem; } 
+  }
 </style>
 </head>
 <body>
@@ -204,8 +224,8 @@
     <p class="hero-eyebrow">Graphic Designer · Visual Artist · Taipei</p>
     <h1>Crafting <em>identity</em><br>through visual story</h1>
     <p class="hero-sub">品牌識別、介面設計與視覺排版——<br>在理性網格與感性視覺間，用設計語言說一個有溫度的故事。</p>
-    <a href="#works" class="btn">View Works</a>
-    <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    <a href="#works" class="btn" data-cursor="VIEW">View Works</a>
+    <a href="#contact" class="btn btn-ghost" data-cursor="CONTACT">Get in Touch</a>
   </div>
 </section>
 
@@ -237,7 +257,7 @@
         <span class="skill-tag">Editorial</span><span class="skill-tag">Illustration</span><span class="skill-tag">Illustrator</span>
         <span class="skill-tag">Photoshop</span><span class="skill-tag">Figma</span>
       </div>
-      <a href="#contact" class="btn">委託洽詢</a>
+      <a href="#contact" class="btn" data-cursor="CONTACT">委託洽詢</a>
     </div>
   </div>
 </section>
@@ -246,9 +266,9 @@
   <p class="section-label">Get in Touch</p>
   <h2>聯絡我</h2>
   <p>有專案想法或合作邀約，歡迎寫信給我。</p>
-  <a href="mailto:hello@example.com" class="contact-email">hello@example.com</a>
+  <a href="mailto:hello@example.com" class="contact-email" data-cursor="EMAIL">hello@example.com</a>
   <div class="social-links">
-    <a href="#">Instagram</a><a href="#">Behance</a><a href="#">LinkedIn</a>
+    <a href="#" data-cursor="LINK">Instagram</a><a href="#" data-cursor="LINK">Behance</a><a href="#" data-cursor="LINK">LinkedIn</a>
   </div>
 </section>
 
@@ -259,33 +279,37 @@
 <div id="lightbox" aria-modal="true" role="dialog">
   <div class="lb-header">
     <span class="nav-logo" style="font-size: 1rem;">Project Viewer</span>
-    <button class="lb-close" onclick="closeLightbox()" aria-label="關閉專案檢視器">Close ✕</button>
+    <button class="lb-close" onclick="closeLightbox()" aria-label="關閉專案檢視器" data-cursor="CLOSE">Close ✕</button>
   </div>
-  <button class="lb-nav-btn lb-prev" onclick="navigateLightbox(-1)" aria-label="上一件作品">‹</button>
-  <button class="lb-nav-btn lb-next" onclick="navigateLightbox(1)" aria-label="下一件作品">›</button>
+  
+  <button class="lb-nav-btn lb-prev" onclick="navigateLightbox(-1)" aria-label="上一件作品" data-cursor="PREV">←</button>
+  <button class="lb-nav-btn lb-next" onclick="navigateLightbox(1)" aria-label="下一件作品" data-cursor="NEXT">→</button>
 
   <div class="lb-content">
     <div class="lb-info">
-      <span class="lb-category" id="lb-category"></span>
-      <h2 class="lb-title" id="lb-title"></h2>
-      <p class="lb-desc" id="lb-desc"></p>
-      <div class="lb-action-bar" style="display: none;">
-        <button class="btn" style="padding: 0.5rem 1rem;" onclick="navigateLightbox(-1)">PREV</button>
-        <button class="btn" style="padding: 0.5rem 1rem;" onclick="navigateLightbox(1)">NEXT</button>
+      <div class="lb-info-top">
+        <span class="lb-category" id="lb-category"></span>
+        <h2 class="lb-title" id="lb-title"></h2>
+        <p class="lb-desc" id="lb-desc"></p>
+      </div>
+      
+      <div class="lb-inline-nav">
+        <button onclick="navigateLightbox(-1)" data-cursor="PREV">← Prev Project</button>
+        <button onclick="navigateLightbox(1)" data-cursor="NEXT">Next Project →</button>
       </div>
     </div>
+    
     <div class="lb-gallery" id="lb-gallery"></div>
   </div>
 </div>
 
 <script>
-  // ★ 記得將下方換成您的 GAS API 網址
   const API_URL = "https://script.google.com/macros/s/AKfycbyTNadGAs8vcQWzYJmQcGK-UqhYbSAPtOnEy4hFn7DQnEn6Haj3iWhVvrI1PjJKEAED2w/exec"; 
   let globalData = [];
   let currentProjectIndex = -1;
   let activeFilteredData = [];
 
-  // ── 自訂游標互動邏輯 ──
+  // ── 3. 自訂游標綁定與語意轉換 ──
   const customCursor = document.getElementById('custom-cursor');
   if (window.matchMedia("(pointer: fine)").matches) {
     window.addEventListener('mousemove', e => {
@@ -293,10 +317,22 @@
       customCursor.style.top = e.clientY + 'px';
     });
   }
+  
   function bindCursorEvents() {
     document.querySelectorAll('a, button, .work-card').forEach(el => {
-      el.addEventListener('mouseenter', () => customCursor.classList.add('hover-view'));
-      el.addEventListener('mouseleave', () => customCursor.classList.remove('hover-view'));
+      // 避免重複綁定
+      if (el.dataset.cursorBound) return;
+      el.dataset.cursorBound = "true";
+      
+      el.addEventListener('mouseenter', () => {
+        // 動態抓取每個按鈕專屬的提示詞，若無則預設為 VIEW
+        const cursorText = el.getAttribute('data-cursor') || 'VIEW';
+        customCursor.setAttribute('data-cursor-text', cursorText);
+        customCursor.classList.add('hover-view');
+      });
+      el.addEventListener('mouseleave', () => {
+        customCursor.classList.remove('hover-view');
+      });
     });
   }
 
@@ -327,7 +363,7 @@
       
       generateFilters(); 
       renderGrid(globalData); 
-      bindCursorEvents(); // 初次綁定游標效果
+      bindCursorEvents(); 
     } catch (error) {
       statusDisplay.className = ""; statusDisplay.style.textAlign = "center";
       statusDisplay.innerHTML = `無法載入作品集資料。 (${error.message})`;
@@ -337,21 +373,34 @@
   function generateFilters() {
     const filterContainer = document.getElementById('filter-container');
     filterContainer.innerHTML = '';
-    const categories = ['ALL', ...new Set(globalData.map(item => item.分類).filter(Boolean))];
+    
+    let allCategories = [];
+    globalData.forEach(item => {
+      if(item.分類) item.分類.split(',').forEach(c => allCategories.push(c.trim()));
+    });
+    const categories = ['ALL', ...new Set(allCategories.filter(Boolean))];
 
     categories.forEach(cat => {
       const btn = document.createElement('button');
       btn.textContent = cat; btn.className = `filter-btn ${cat === 'ALL' ? 'active' : ''}`;
+      // 為篩選按鈕也加上游標語意
+      btn.setAttribute('data-cursor', 'FILTER');
+      
       btn.onclick = (e) => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         e.target.classList.add('active');
-        activeFilteredData = cat === 'ALL' ? globalData : globalData.filter(p => p.分類 === cat);
+        
+        activeFilteredData = cat === 'ALL' ? globalData : globalData.filter(p => {
+          const pCats = p.分類 ? p.分類.split(',').map(c => c.trim()) : [];
+          return pCats.includes(cat);
+        });
+        
         const grid = document.getElementById('worksGrid');
         grid.style.opacity = 0; grid.style.transition = 'opacity 0.25s ease';
         setTimeout(() => { 
           renderGrid(activeFilteredData); 
           grid.style.opacity = 1; 
-          bindCursorEvents(); // 重新渲染後重新綁定游標
+          bindCursorEvents(); 
         }, 250);
       };
       filterContainer.appendChild(btn);
@@ -374,6 +423,8 @@
     projects.forEach((p, idx) => {
       const card = document.createElement('div'); card.className = "work-card";
       card.onclick = () => openLightbox(idx);
+      card.setAttribute('data-cursor', 'VIEW'); // 卡片游標提示
+
       const coverImage = (p.images && p.images.length > 0) ? p.images[0] : '';
       card.innerHTML = `
         <div class="work-thumb">
@@ -392,19 +443,16 @@
     currentProjectIndex = index;
     const p = activeFilteredData[index]; 
     const lb = document.getElementById('lightbox');
+    
     document.getElementById('lb-category').textContent = p.分類;
     document.getElementById('lb-title').textContent = p.專案名稱;
     document.getElementById('lb-desc').textContent = p.描述;
-
-    // 📊 【新增】GA4 自訂事件追蹤：記錄專案點擊
+    
+    // GA4 追蹤
     if (typeof gtag === 'function') {
-      gtag('event', 'view_project', {
-        'project_title': p.專案名稱,
-        'project_category': p.分類
-      });
-      console.log(`GA4 Tracked: ${p.專案名稱}`); // 開發者除錯用，上線可保留不影響
+      gtag('event', 'view_project', { 'project_title': p.專案名稱, 'project_category': p.分類 });
     }
-
+    
     const gallery = document.getElementById('lb-gallery'); gallery.innerHTML = ''; 
     if (p.images) {
       p.images.forEach(imgUrl => {
@@ -433,25 +481,18 @@
     if (e.key === 'ArrowRight') navigateLightbox(1);
   });
 
-  // ── 觸控滑動 (Swipe) 切換 ──
+  // 觸控滑動切換
   let touchStartX = 0;
   let touchEndX = 0;
   const lightboxElement = document.getElementById('lightbox');
   
-  lightboxElement.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
-  }, {passive: true});
-
+  lightboxElement.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
   lightboxElement.addEventListener('touchend', e => {
     touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-  }, {passive: true});
-
-  function handleSwipe() {
     const swipeThreshold = 50; 
     if (touchEndX < touchStartX - swipeThreshold) navigateLightbox(1); 
     if (touchEndX > touchStartX + swipeThreshold) navigateLightbox(-1); 
-  }
+  }, {passive: true});
 
   function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = 'auto'; }
 </script>
