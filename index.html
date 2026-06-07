@@ -1,381 +1,450 @@
 <!DOCTYPE html>
-<html lang="zh-TW" class="dark scroll-smooth">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MMMIXHUI</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            cyber: {
-              black: '#050510',
-              cyan: '#00f0ff',
-              purple: '#8a2be2',
-              pink: '#ff007f'
-            }
-          },
-          animation: {
-            'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'float': 'float 6s ease-in-out infinite',
-          },
-          keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' },
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body {
-      background-color: #050510;
-      background-image: 
-        linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
-      background-size: 50px 50px;
-      color: #e0e0e0;
-      overflow-x: hidden;
-    }
-    
-    body::before {
-      content: " ";
-      display: block;
-      position: fixed;
-      top: 0; left: 0; bottom: 0; right: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-      z-index: -1;
-      background-size: 100% 2px, 3px 100%;
-      pointer-events: none;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .glass-card {
-      background: rgba(10, 10, 25, 0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.05), inset 0 0 20px rgba(138, 43, 226, 0.05);
-      transition: all 0.3s ease;
-    }
-    
-    .glass-card:hover {
-      border-color: rgba(0, 240, 255, 0.8);
-      box-shadow: 0 0 30px rgba(0, 240, 255, 0.2), inset 0 0 30px rgba(138, 43, 226, 0.2);
-    }
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-13QVG78JZL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    .cyber-scrollbar {
-      scroll-snap-type: x mandatory;
-      scrollbar-width: thin;
-      scrollbar-color: #00f0ff #050510;
-      -webkit-overflow-scrolling: touch; /* 優化 iOS 觸控滑動 */
-    }
-    .cyber-scrollbar::-webkit-scrollbar { height: 4px; }
-    .cyber-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.5); }
-    .cyber-scrollbar::-webkit-scrollbar-thumb { background: #00f0ff; border-radius: 10px; }
+  gtag('config', 'G-13QVG78JZL');
+</script>
 
-    .neon-text { text-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff; }
-    .neon-text-pink { text-shadow: 0 0 5px #ff007f, 0 0 10px #ff007f; }
-    .clip-corner { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%); }
-    .clip-corner-reverse { clip-path: polygon(15px 0, 100% 0, 100% 100%, 0 100%, 0 15px); }
+<title>Hui-Qing Chen — Graphic Designer & Visual Artist</title>
+<meta name="description" content="品牌識別、介面設計與視覺排版——在理性網格與感性視覺間，用設計語言說一個有溫度的故事。">
+<meta property="og:title" content="Hui-Qing Chen — Digital Archive">
+<meta property="og:description" content="專注於品牌識別與視覺設計的創作者，探索理性網格與感性視覺的完美平衡。">
+<meta property="og:image" content="https://mmmixhui.github.io/portfolio/og-image.jpg"> <meta property="og:url" content="https://mmmixhui.github.io/portfolio">
+<meta property="og:type" content="website">
 
-    .filter-btn.active {
-      background: rgba(0, 240, 255, 0.2);
-      border-color: #00f0ff;
-      color: #00f0ff;
-      box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.5);
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1814;
+    --muted: #7a7671;
+    --faint: #f0ede8;
+    --warm: #c8a87a;
+    --bg: #faf9f7;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: var(--sans); background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.7;
+    /* 隱藏原生游標 (僅限電腦端) */
+    @media (pointer: fine) { cursor: none; }
+  }
+
+  /* ── 平面設計師優化：專屬反白選取色 ── */
+  ::selection { background-color: var(--warm); color: var(--bg); }
+  ::-moz-selection { background-color: var(--warm); color: var(--bg); }
+
+  /* ── UI/UX 優化：智慧反差色游標 (Mix-Blend-Mode) ── */
+  @media (pointer: fine) {
+    .custom-cursor {
+      position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+      /* 改為白色底，並使用 difference 達成自動變色 */
+      background-color: #ffffff; 
+      mix-blend-mode: difference;
+      border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     }
-  </style>
+    .custom-cursor.hover-view {
+      width: 60px; height: 60px; 
+      /* 移除特定顏色，保持純白來做完美差值運算 */
+    }
+    .custom-cursor.hover-view::after {
+      content: 'VIEW'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      /* 黑色文字在 difference 模式下，會與白色外圈產生完美對比 */
+      color: #000000; 
+      font-size: 10px; letter-spacing: 0.1em; font-weight: 500;
+    }
+    /* 確保所有可點擊元素沒有原生游標 */
+    a, button, .work-card, input, textarea { cursor: none !important; }
+  }
+  @media (pointer: coarse) { .custom-cursor { display: none; } } /* 手機端隱藏自訂游標 */
+
+  /* ── SMART NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem; background: rgba(250,249,247,.92); backdrop-filter: blur(8px); border-bottom: 0.5px solid rgba(26,24,20,.1);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  nav.nav-hidden { transform: translateY(-100%); }
+  .nav-logo { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; letter-spacing: .04em; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ── HERO ── */
+  #hero { min-height: 100vh; display: grid; place-items: center; padding: 8rem 3rem 4rem; position: relative; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 80% 30%, rgba(200,168,122,.13) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 70%, rgba(200,168,122,.08) 0%, transparent 60%);
+    transition: transform 0.1s ease-out; 
+  }
+  .hero-inner { position: relative; text-align: center; max-width: 720px; }
+  .hero-eyebrow { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--warm); margin-bottom: 1rem; }
+  h1 { font-family: var(--serif); font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 300; line-height: 1.1; letter-spacing: -.01em; margin-bottom: 1.5rem; }
+  h1 em { font-style: italic; color: var(--warm); }
+  .hero-sub { font-size: .95rem; color: var(--muted); max-width: 420px; margin: 0 auto 3rem; line-height: 1.8; }
+
+  .btn {
+    display: inline-block; padding: .75rem 2.2rem; border: 1px solid var(--ink); font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; text-decoration: none; color: var(--ink); transition: background .2s, color .2s; cursor: pointer;
+  }
+  .btn:hover { background: var(--ink); color: var(--bg); }
+  .btn-ghost { border-color: rgba(26,24,20,.3); color: var(--muted); margin-left: 1rem; }
+  .btn-ghost:hover { border-color: var(--ink); color: var(--ink); background: transparent; }
+
+  /* ── WORKS ── */
+  section { padding: 6rem 3rem; }
+  .section-label { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--warm); margin-bottom: 1rem; }
+  h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.2; margin-bottom: 2.5rem; }
+  
+  #works { background: var(--faint); min-height: 60vh; }
+  .filter-bar { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .filter-btn { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; border: 0.5px solid rgba(26,24,20,.25); background: transparent; padding: .45rem 1.2rem; cursor: pointer; transition: all .2s; color: var(--muted); }
+  .filter-btn:hover, .filter-btn.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  
+  .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+  .skeleton-card { background: var(--bg); border: 0.5px solid rgba(26,24,20,.05); overflow: hidden; }
+  .skeleton-thumb { aspect-ratio: 4/3; background: linear-gradient(90deg, var(--faint) 25%, #e6e3de 50%, var(--faint) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite linear; }
+  .skeleton-meta { padding: 1.1rem 1.25rem; }
+  .skeleton-line { height: 12px; background: var(--faint); margin-bottom: 0.6rem; border-radius: 2px; width: 70%; }
+  .skeleton-line.short { width: 40%; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+  .works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+  .work-card { background: var(--bg); overflow: hidden; transition: transform .3s cubic-bezier(0.25, 1, 0.5, 1); opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+  .work-card.revealed { opacity: 1; transform: translateY(0); }
+  .work-card:hover { transform: translateY(-6px); }
+  
+  .work-thumb { aspect-ratio: 4/3; background: var(--faint); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+  .work-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+  .work-thumb img.loaded { opacity: 1; }
+  .work-card:hover .work-thumb img { transform: scale(1.04); }
+  .work-overlay { position: absolute; inset: 0; background: rgba(26,24,20,.4); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .25s; }
+  .work-card:hover .work-overlay { opacity: 1; }
+  .work-overlay-text { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: #fff; }
+  .work-meta { padding: 1.1rem 1.25rem; }
+  .work-title { font-size: .95rem; font-weight: 500; margin-bottom: .25rem; }
+  .work-tag { font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--warm); }
+
+  /* ── LIGHTBOX ── */
+  #lightbox { position: fixed; inset: 0; z-index: 200; background: rgba(250, 249, 247, 0.99); overflow-y: auto; display: none; opacity: 0; transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+  #lightbox.active { display: block; opacity: 1; }
+  .lb-header { position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; background: var(--bg); border-bottom: 0.5px solid rgba(26,24,20,.1); }
+  .lb-close { background: none; border: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); transition: color 0.2s; }
+  .lb-close:hover { color: var(--warm); }
+  .lb-nav-btn { position: fixed; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 2.5rem; color: var(--ink); font-family: var(--serif); z-index: 210; opacity: 0.3; transition: opacity 0.2s, color 0.2s; padding: 2rem 1rem; user-select: none; }
+  .lb-nav-btn:hover { opacity: 1; color: var(--warm); }
+  .lb-prev { left: 1rem; } .lb-next { right: 1rem; }
+  
+  .lb-content { max-width: 1200px; margin: 0 auto; padding: 4rem 3rem; display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; }
+  .lb-info { position: sticky; top: 8rem; align-self: start; }
+  .lb-category { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm); margin-bottom: 1rem; display: block; }
+  .lb-title { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; line-height: 1.2; margin-bottom: 1.5rem; }
+  .lb-desc { color: var(--muted); line-height: 1.8; font-size: 0.95rem; white-space: pre-wrap; }
+  .lb-gallery { display: flex; flex-direction: column; gap: 2rem; }
+  .lb-gallery img { width: 100%; height: auto; background: var(--faint); opacity: 0; transition: opacity 0.5s ease; }
+  .lb-gallery img.loaded { opacity: 1; }
+
+  /* ── ABOUT & CONTACT ── */
+  #about { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .about-img-frame { aspect-ratio: 3/4; background: var(--faint); position: relative; overflow: hidden; }
+  .about-img-frame::after { content: ''; position: absolute; top: 16px; left: 16px; right: -16px; bottom: -16px; border: 1px solid rgba(200,168,122,.4); z-index: -1; }
+  .about-img-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .about-text p { color: var(--muted); line-height: 1.9; margin-bottom: 1.2rem; font-size: .95rem; }
+  .skills-list { display: flex; flex-wrap: wrap; gap: .5rem; margin: 2rem 0; }
+  .skill-tag { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; border: 0.5px solid rgba(26,24,20,.2); padding: .3rem .8rem; color: var(--muted); }
+
+  #contact { background: var(--ink); color: var(--bg); text-align: center; }
+  #contact .section-label { color: var(--warm); }
+  #contact h2 { color: var(--bg); }
+  #contact p { color: rgba(250,249,247,.6); margin-bottom: 2.5rem; font-size: .95rem; }
+  .contact-email { font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.2rem); color: var(--warm); text-decoration: none; display: block; margin-bottom: 3rem; transition: opacity .2s; }
+  .contact-email:hover { opacity: .75; }
+  .social-links { display: flex; justify-content: center; gap: 2rem; }
+  .social-links a { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(250,249,247,.5); text-decoration: none; transition: color .2s; }
+  .social-links a:hover { color: var(--warm); }
+  footer { padding: 1.5rem 3rem; font-size: .72rem; color: var(--muted); display: flex; justify-content: space-between; border-top: 0.5px solid rgba(26,24,20,.1); }
+
+  @media (max-width: 900px) { .lb-content { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.5rem; } .lb-info { position: static; } .lb-nav-btn { display: none; } }
+  @media (max-width: 768px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } #about { grid-template-columns: 1fr; gap: 3rem; } .about-img-frame { aspect-ratio: 4/3; } footer { flex-direction: column; gap: .5rem; } .lb-header { padding: 1rem 1.5rem; } }
+</style>
 </head>
-<body class="font-mono selection:bg-cyber-cyan selection:text-black">
+<body>
 
-  <!-- HUD 全局導覽列 -->
-  <nav class="fixed w-full top-0 z-40 bg-cyber-black/90 backdrop-blur-md border-b border-cyber-cyan/30 flex justify-between items-center p-3 md:p-4 lg:px-8">
-    <div class="flex items-center gap-2 md:gap-4">
-      <div class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-cyber-cyan animate-pulse-fast shadow-[0_0_10px_#00f0ff]"></div>
-      <div class="text-sm md:text-xl lg:text-2xl font-black tracking-widest text-cyber-cyan hover:text-white transition-colors cursor-pointer truncate" onclick="window.scrollTo(0,0)">
-        MMMIXHUI<span class="text-white opacity-50 hidden sm:inline">instagram.com/mmmixhui_2021 </span>
+<div class="custom-cursor" id="custom-cursor"></div>
+
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">mmmixhui</a>
+  <ul class="nav-links">
+    <li><a href="#works">Works</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Graphic Designer · Visual Artist · Taipei</p>
+    <h1>Crafting <em>identity</em><br>through visual story</h1>
+    <p class="hero-sub">品牌識別、介面設計與視覺排版——<br>在理性網格與感性視覺間，用設計語言說一個有溫度的故事。</p>
+    <a href="#works" class="btn">View Works</a>
+    <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+  </div>
+</section>
+
+<section id="works">
+  <p class="section-label">Selected Works</p>
+  <h2>作品集</h2>
+  <div class="filter-bar" id="filter-container"></div>
+  
+  <div id="status-display" class="skeleton-grid">
+    <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-meta"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-meta"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-meta"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+  </div>
+  
+  <div class="works-grid" id="worksGrid"></div>
+</section>
+
+<section>
+  <div id="about">
+    <div class="about-img-frame"><img src="avatar.jpg" alt="Hui-Qing Chen"></div>
+    <div class="about-text">
+      <p class="section-label">About Me</p>
+      <h2>HUI</h2>
+      <p>一位專注於品牌識別與視覺設計的創作者，目前居住在台北。我相信每個品牌都有自己獨特的語言，我的工作是幫助它找到那個聲音。</p>
+      <p>我擅長將複雜的概念轉化為清晰而有溫度的視覺語言，從 Logo 設計、品牌系統到數位介面與排版，每個細節都是一次刻意的選擇。</p>
+      <p>目前接受品牌識別、視覺排版及相關設計的委託案，歡迎聯繫洽談。</p>
+      <div class="skills-list">
+        <span class="skill-tag">Brand Identity</span><span class="skill-tag">UI/UX Visual</span><span class="skill-tag">Typography</span>
+        <span class="skill-tag">Editorial</span><span class="skill-tag">Illustration</span><span class="skill-tag">Illustrator</span>
+        <span class="skill-tag">Photoshop</span><span class="skill-tag">Figma</span>
       </div>
-    </div>
-    <div class="flex gap-4 md:gap-6 text-[10px] sm:text-xs md:text-sm font-bold text-cyber-cyan/70 tracking-widest">
-      <a href="#about" class="hover:text-cyber-pink hover:neon-text-pink transition-all">IDENTITY</a>
-      <a href="#archive" class="hover:text-cyber-cyan hover:neon-text transition-all">ARCHIVE</a>
-    </div>
-  </nav>
-
-  <main class="pt-20 md:pt-24 pb-20 px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col gap-16 md:gap-20">
-    
-    <!-- 模組一：關於我 (IDENTITY) -->
-    <section id="about" class="flex flex-col lg:flex-row gap-6 md:gap-10 mt-6 md:mt-10 scroll-mt-24">
-      
-      <!-- 左側：數位身分投影 -->
-      <div class="w-full lg:w-1/3 glass-card clip-corner-reverse p-1 relative flex flex-col items-center justify-center min-h-[350px] md:min-h-[400px] py-8 lg:py-0">
-        <div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-cyber-cyan"></div>
-        <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-cyber-cyan"></div>
-        
-        <!-- 頭像區 -->
-        <div class="w-32 h-32 md:w-48 md:h-48 rounded-full border-2 border-dashed border-cyber-cyan/50 p-2 relative animate-float mb-4 md:mb-6">
-          <div class="w-full h-full rounded-full bg-gradient-to-br from-cyber-purple/40 to-cyber-cyan/20 overflow-hidden flex items-center justify-center border border-cyber-cyan shadow-[0_0_20px_rgba(0,240,255,0.2)]">
-            <img src="avatar.jpg" class="w-full h-full object-cover">
-          </div>
-        </div>
-
-        <h1 class="text-2xl md:text-3xl font-black text-white tracking-widest uppercase text-center px-4">
-          <span class="text-cyber-cyan block text-xs md:text-sm mb-1 md:mb-2">>>> DESIGN_ENTITY:</span>
-            黑果仔 台灣插畫家
-        </h1>
-        <p class="text-cyber-pink tracking-widest mt-2 font-bold text-xs md:text-sm text-center">GRAPHIC DESIGNER // VISUAL ARTIST</p>
-        
-        <div class="mt-4 md:mt-6 flex flex-wrap justify-center gap-2 md:gap-3 px-4">
-          <div class="bg-cyber-purple/20 border border-cyber-purple px-2 py-1 text-[9px] md:text-[10px] text-cyber-purple">LOC: TAIWAN_886</div>
-          <div class="bg-cyber-cyan/20 border border-cyber-cyan px-2 py-1 text-[9px] md:text-[10px] text-cyber-cyan">STATUS: CREATING</div>
-        </div>
-      </div>
-
-      <!-- 右側：技能數據與論述 -->
-      <div class="w-full lg:w-2/3 flex flex-col gap-6">
-        <div class="glass-card clip-corner p-6 md:p-8">
-          <h2 class="text-lg md:text-xl font-bold text-cyber-cyan mb-3 md:mb-4 tracking-widest border-b border-cyber-cyan/30 pb-2">>>>關於我 ABOUT ME</h2>
-          <p class="text-gray-300 leading-relaxed font-sans text-sm md:text-base lg:text-lg">
-            牠黑溜溜的一隻小生物-黑果仔，
-            因為我很怕冷，就設定讓牠在寒冷冬天出生，
-            非常愛睡覺、個性懶懶的，喜歡吃冰棒跟彩虹餅乾，每天都呆萌呆萌的過日子。
-            算是我養的一隻小寵物，在這裡會跟大家分享生活與黑果仔的小故事。
-          </p>
-        </div>
-
-        <div class="glass-card clip-corner p-6 md:p-8">
-          <h2 class="text-lg md:text-xl font-bold text-cyber-cyan mb-4 md:mb-6 tracking-widest border-b border-cyber-cyan/30 pb-2">>>> CAPABILITIES_MATRIX</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-            <div>
-              <div class="flex justify-between text-[10px] md:text-xs mb-1 text-white"><span class="tracking-widest">BRANDING</span><span class="text-cyber-cyan">95%</span></div>
-              <div class="w-full h-1.5 md:h-2 bg-cyber-black border border-cyber-cyan/30"><div class="h-full bg-cyber-cyan shadow-[0_0_10px_#00f0ff]" style="width: 95%"></div></div>
-            </div>
-            <div>
-              <div class="flex justify-between text-[10px] md:text-xs mb-1 text-white"><span class="tracking-widest">UI/UX VISUAL</span><span class="text-cyber-pink">88%</span></div>
-              <div class="w-full h-1.5 md:h-2 bg-cyber-black border border-cyber-pink/30"><div class="h-full bg-cyber-pink shadow-[0_0_10px_#ff007f]" style="width: 88%"></div></div>
-            </div>
-            <div>
-              <div class="flex justify-between text-[10px] md:text-xs mb-1 text-white"><span class="tracking-widest">TYPOGRAPHY</span><span class="text-cyber-purple">92%</span></div>
-              <div class="w-full h-1.5 md:h-2 bg-cyber-black border border-cyber-purple/30"><div class="h-full bg-cyber-purple shadow-[0_0_10px_#8a2be2]" style="width: 92%"></div></div>
-            </div>
-            <div>
-              <div class="flex justify-between text-[10px] md:text-xs mb-1 text-white"><span class="tracking-widest">ILLUSTRATION</span><span class="text-green-400">85%</span></div>
-              <div class="w-full h-1.5 md:h-2 bg-cyber-black border border-green-400/30"><div class="h-full bg-green-400 shadow-[0_0_10px_#4ade80]" style="width: 85%"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 模組二：專案展示庫 (ARCHIVE) -->
-    <section id="archive" class="scroll-mt-24">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 md:mb-8 border-b border-cyber-cyan/30 pb-4 gap-4 md:gap-6">
-        <div>
-          <h2 class="text-2xl md:text-4xl font-black neon-text uppercase tracking-widest">DATA_ARCHIVE</h2>
-          <p class="text-cyber-purple mt-1 md:mt-2 tracking-widest text-xs md:text-sm">INDEXING SECURE VISUAL ASSETS...</p>
-        </div>
-        
-        <!-- 動態分類過濾器 -->
-        <div id="filter-container" class="flex flex-row overflow-x-auto w-full md:w-auto md:flex-wrap gap-2 md:gap-3 justify-start md:justify-end pb-2 md:pb-0 cyber-scrollbar">
-          <!-- 按鈕會動態插入這裡 -->
-        </div>
-      </div>
-
-      <!-- 讀取狀態 -->
-      <div id="status-display" class="flex flex-col items-center justify-center py-16 md:py-20 glass-card clip-corner">
-        <div class="w-12 h-12 md:w-16 md:h-16 border-4 border-cyber-cyan/20 border-t-cyber-cyan rounded-full animate-spin mb-4 md:mb-6"></div>
-        <h2 class="text-lg md:text-xl font-black tracking-widest text-cyber-cyan animate-pulse text-center px-4">CONNECTING TO DATABASE...</h2>
-      </div>
-
-      <!-- 專案畫廊網格 -->
-      <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-6 md:gap-10"></div>
-    </section>
-
-  </main>
-
-  <!-- 全息投影 Lightbox -->
-  <div id="lightbox" class="fixed inset-0 z-50 hidden bg-cyber-black/95 backdrop-blur-xl p-2 md:p-8 overflow-y-auto flex items-start md:items-center justify-center">
-    <div class="w-full max-w-7xl glass-card clip-corner flex flex-col relative animate-float mt-14 md:mt-0 mb-8 md:mb-0">
-      
-      <div class="flex justify-between items-center p-3 md:p-4 border-b border-cyber-cyan/30 bg-white/5 sticky top-0 z-10 backdrop-blur-md">
-        <div class="flex items-center gap-2 md:gap-3">
-          <div class="w-2 h-2 bg-cyber-pink rounded-full shadow-[0_0_8px_#ff007f]"></div>
-          <span id="lb-title-bar" class="font-bold tracking-widest text-cyber-cyan text-[10px] md:text-sm truncate max-w-[150px] sm:max-w-xs">VIEWER</span>
-        </div>
-        <button onclick="closeLightbox()" class="text-cyber-cyan hover:text-white active:bg-cyber-pink/50 border border-cyber-cyan/30 px-3 md:px-4 py-1 text-xs md:text-sm tracking-widest transition-colors clip-corner flex-shrink-0">
-          CLOSE [X]
-        </button>
-      </div>
-
-      <div class="p-4 md:p-10 flex flex-col xl:flex-row gap-6 md:gap-8 max-h-[85vh] overflow-y-auto cyber-scrollbar">
-        <div class="w-full xl:w-1/3 flex flex-col gap-4 md:gap-6">
-          <div class="inline-block border border-cyber-purple text-cyber-purple px-2 py-1 text-[10px] md:text-xs tracking-widest w-fit bg-cyber-purple/10">
-            CLASS: <span id="lb-category" class="text-white"></span>
-          </div>
-          <h2 id="lb-title" class="text-2xl md:text-4xl lg:text-5xl font-black uppercase neon-text leading-tight"></h2>
-          <div class="relative p-4 md:p-6 border border-cyber-cyan/20 bg-cyber-cyan/5 clip-corner mt-2 md:mt-4">
-            <p id="lb-desc" class="text-xs md:text-sm lg:text-base text-gray-300 leading-relaxed whitespace-pre-wrap font-sans"></p>
-          </div>
-        </div>
-        <div id="lb-gallery" class="w-full xl:w-2/3 flex flex-col gap-4 md:gap-6"></div>
-      </div>
+      <a href="#contact" class="btn">委託洽詢</a>
     </div>
   </div>
+</section>
 
-  <script>
-    // ★ 記得將下方替換為您的 API 網址
-    const API_URL = "https://script.google.com/macros/s/AKfycbyTNadGAs8vcQWzYJmQcGK-UqhYbSAPtOnEy4hFn7DQnEn6Haj3iWhVvrI1PjJKEAED2w/exec"; 
-    
-    let globalData = [];
-    let currentFilter = 'ALL';
+<section id="contact">
+  <p class="section-label">Get in Touch</p>
+  <h2>聯絡我</h2>
+  <p>有專案想法或合作邀約，歡迎寫信給我。</p>
+  <a href="mailto:hello@example.com" class="contact-email">hello@example.com</a>
+  <div class="social-links">
+    <a href="#">Instagram</a><a href="#">Behance</a><a href="#">LinkedIn</a>
+  </div>
+</section>
 
-    window.onload = async function() {
-      const statusDisplay = document.getElementById('status-display');
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error('API Connection Rejected');
-        
-        const data = await response.json();
-        if (data.error) throw new Error(data.error);
-        
-        globalData = data.reverse(); 
-        statusDisplay.style.display = 'none';
-        
-        generateFilters(); 
-        renderGrid(globalData); 
-      } catch (error) {
-        statusDisplay.innerHTML = `
-          <h2 class="neon-text-pink text-xl md:text-2xl font-black mb-2 text-center">NODE_SYNC_FAILED</h2>
-          <p class="text-white/80 text-xs md:text-sm text-center px-4">ERROR: ${error.message}</p>
-        `;
-      }
-    };
+<footer>
+  <span>© 2026 mmmixhui. All rights reserved.</span><span>Digital Archive</span>
+</footer>
 
-    function generateFilters() {
-      const filterContainer = document.getElementById('filter-container');
-      filterContainer.innerHTML = '';
+<div id="lightbox" aria-modal="true" role="dialog">
+  <div class="lb-header">
+    <span class="nav-logo" style="font-size: 1rem;">Project Viewer</span>
+    <button class="lb-close" onclick="closeLightbox()" aria-label="關閉專案檢視器">Close ✕</button>
+  </div>
+  <button class="lb-nav-btn lb-prev" onclick="navigateLightbox(-1)" aria-label="上一件作品">‹</button>
+  <button class="lb-nav-btn lb-next" onclick="navigateLightbox(1)" aria-label="下一件作品">›</button>
 
-      const categories = ['ALL', ...new Set(globalData.map(item => item.分類).filter(Boolean))];
+  <div class="lb-content">
+    <div class="lb-info">
+      <span class="lb-category" id="lb-category"></span>
+      <h2 class="lb-title" id="lb-title"></h2>
+      <p class="lb-desc" id="lb-desc"></p>
+      <div class="lb-action-bar" style="display: none;">
+        <button class="btn" style="padding: 0.5rem 1rem;" onclick="navigateLightbox(-1)">PREV</button>
+        <button class="btn" style="padding: 0.5rem 1rem;" onclick="navigateLightbox(1)">NEXT</button>
+      </div>
+    </div>
+    <div class="lb-gallery" id="lb-gallery"></div>
+  </div>
+</div>
 
-      categories.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.textContent = `[ ${cat} ]`;
-        btn.className = `filter-btn whitespace-nowrap text-[10px] md:text-xs lg:text-sm px-3 md:px-4 py-1.5 md:py-2 border border-cyber-cyan/30 text-gray-400 hover:text-cyber-cyan hover:border-cyber-cyan transition-all clip-corner tracking-widest ${cat === 'ALL' ? 'active' : ''}`;
-        
-        btn.onclick = (e) => {
-          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-          e.target.classList.add('active');
-          
-          currentFilter = cat;
-          const filteredData = cat === 'ALL' ? globalData : globalData.filter(p => p.分類 === cat);
-          
-          const grid = document.getElementById('portfolio-grid');
-          grid.style.opacity = 0;
-          setTimeout(() => {
-            renderGrid(filteredData);
-            grid.style.opacity = 1;
-          }, 300);
-        };
-        filterContainer.appendChild(btn);
-      });
-    }
+<script>
+  // ★ 記得將下方換成您的 GAS API 網址
+  const API_URL = "https://script.google.com/macros/s/AKfycbyTNadGAs8vcQWzYJmQcGK-UqhYbSAPtOnEy4hFn7DQnEn6Haj3iWhVvrI1PjJKEAED2w/exec"; 
+  let globalData = [];
+  let currentProjectIndex = -1;
+  let activeFilteredData = [];
 
-    function renderGrid(projects) {
-      const grid = document.getElementById('portfolio-grid');
-      grid.innerHTML = ''; 
+  // ── 自訂游標互動邏輯 ──
+  const customCursor = document.getElementById('custom-cursor');
+  if (window.matchMedia("(pointer: fine)").matches) {
+    window.addEventListener('mousemove', e => {
+      customCursor.style.left = e.clientX + 'px';
+      customCursor.style.top = e.clientY + 'px';
+    });
+  }
+  function bindCursorEvents() {
+    document.querySelectorAll('a, button, .work-card').forEach(el => {
+      el.addEventListener('mouseenter', () => customCursor.classList.add('hover-view'));
+      el.addEventListener('mouseleave', () => customCursor.classList.remove('hover-view'));
+    });
+  }
+
+  // ── 智能隱藏導覽列 ──
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > lastScrollY && window.scrollY > 150) navbar.classList.add('nav-hidden');
+    else navbar.classList.remove('nav-hidden');
+    lastScrollY = window.scrollY;
+  });
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY < window.innerHeight) document.getElementById('heroBg').style.transform = `translateY(${window.scrollY * 0.2}px)`;
+  });
+
+  window.onload = async function() {
+    const statusDisplay = document.getElementById('status-display');
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error('Network Error');
+      const data = await response.json();
+      if (data.error) throw new Error(data.error);
       
-      if(projects.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-10 md:py-20 text-[10px] md:text-sm text-cyber-pink tracking-widest border border-cyber-pink/30 glass-card">NO_DATA_FOUND_IN_THIS_SECTOR</div>`;
-        return;
-      }
+      globalData = data.reverse(); 
+      activeFilteredData = [...globalData]; 
+      statusDisplay.style.display = 'none';
+      
+      generateFilters(); 
+      renderGrid(globalData); 
+      bindCursorEvents(); // 初次綁定游標效果
+    } catch (error) {
+      statusDisplay.className = ""; statusDisplay.style.textAlign = "center";
+      statusDisplay.innerHTML = `無法載入作品集資料。 (${error.message})`;
+    }
+  };
 
-      projects.forEach((p) => {
-        const originalIndex = globalData.findIndex(item => item.ID === p.ID || item.專案名稱 === p.專案名稱);
+  function generateFilters() {
+    const filterContainer = document.getElementById('filter-container');
+    filterContainer.innerHTML = '';
+    const categories = ['ALL', ...new Set(globalData.map(item => item.分類).filter(Boolean))];
 
-        const card = document.createElement('div');
-        card.className = "glass-card clip-corner flex flex-col cursor-pointer group transition-all duration-300 transform";
-        card.onclick = () => openLightbox(originalIndex);
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.textContent = cat; btn.className = `filter-btn ${cat === 'ALL' ? 'active' : ''}`;
+      btn.onclick = (e) => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        activeFilteredData = cat === 'ALL' ? globalData : globalData.filter(p => p.分類 === cat);
+        const grid = document.getElementById('worksGrid');
+        grid.style.opacity = 0; grid.style.transition = 'opacity 0.25s ease';
+        setTimeout(() => { 
+          renderGrid(activeFilteredData); 
+          grid.style.opacity = 1; 
+          bindCursorEvents(); // 重新渲染後重新綁定游標
+        }, 250);
+      };
+      filterContainer.appendChild(btn);
+    });
+  }
 
-        const galleryWrap = document.createElement('div');
-        galleryWrap.className = "w-full flex cyber-scrollbar border-b border-cyber-cyan/30 aspect-[4/3] md:aspect-video";
-        
-        if (p.images && p.images.length > 0) {
-          p.images.forEach((imgUrl, i) => {
-            const imgContainer = document.createElement('div');
-            imgContainer.className = "w-full h-full shrink-0 snap-center relative";
-            const img = document.createElement('img');
-            img.src = imgUrl;
-            img.className = "w-full h-full object-cover opacity-90 md:opacity-80 group-hover:opacity-100 transition-opacity duration-500";
-            img.loading = "lazy";
-            
-            const indicator = document.createElement('div');
-            indicator.className = "absolute bottom-2 right-2 md:bottom-3 md:right-3 bg-cyber-black/80 border border-cyber-cyan/50 text-cyber-cyan text-[9px] md:text-[10px] px-1.5 py-0.5 md:px-2 md:py-1 backdrop-blur-sm font-bold tracking-widest";
-            indicator.textContent = `IMG [ ${i + 1} / ${p.images.length} ]`;
+  function renderGrid(projects) {
+    const grid = document.getElementById('worksGrid'); grid.innerHTML = ''; 
+    if(projects.length === 0) return grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem 0; color: var(--muted); font-style: italic;">此分類尚無作品。</div>`;
 
-            imgContainer.appendChild(img);
-            imgContainer.appendChild(indicator);
-            galleryWrap.appendChild(imgContainer);
-          });
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          cardObserver.unobserve(entry.target);
         }
+      });
+    }, { threshold: 0.1 });
 
-        const infoWrap = document.createElement('div');
-        infoWrap.className = "p-4 md:p-6 flex flex-col gap-2 md:gap-3 relative overflow-hidden";
-        
-        const catEl = document.createElement('div');
-        catEl.className = "text-cyber-purple text-[10px] md:text-xs font-bold tracking-widest uppercase mb-0.5 md:mb-1";
-        catEl.textContent = `> ${p.分類}`; 
+    projects.forEach((p, idx) => {
+      const card = document.createElement('div'); card.className = "work-card";
+      card.onclick = () => openLightbox(idx);
+      const coverImage = (p.images && p.images.length > 0) ? p.images[0] : '';
+      card.innerHTML = `
+        <div class="work-thumb">
+          ${coverImage ? `<img src="${coverImage}" onload="this.classList.add('loaded')" alt="${p.專案名稱}">` : `<div class="work-thumb-placeholder">No Image</div>`}
+          <div class="work-overlay"><span class="work-overlay-text">View Project</span></div>
+        </div>
+        <div class="work-meta"><p class="work-title">${p.專案名稱}</p><p class="work-tag">${p.分類}</p></div>
+      `;
+      grid.appendChild(card);
+      cardObserver.observe(card); 
+    });
+  }
 
-        const titleEl = document.createElement('h3');
-        titleEl.className = "text-base md:text-xl font-bold uppercase text-white tracking-wider truncate group-hover:text-cyber-cyan transition-colors";
-        titleEl.textContent = p.專案名稱;
-
-        infoWrap.appendChild(catEl);
-        infoWrap.appendChild(titleEl);
-        
-        card.appendChild(galleryWrap);
-        card.appendChild(infoWrap);
-        grid.appendChild(card);
+  function openLightbox(index) {
+    if(index < 0 || index >= activeFilteredData.length) return;
+    currentProjectIndex = index;
+    const p = activeFilteredData[index]; 
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lb-category').textContent = p.分類;
+    document.getElementById('lb-title').textContent = p.專案名稱;
+    document.getElementById('lb-desc').textContent = p.描述;
+    const gallery = document.getElementById('lb-gallery'); gallery.innerHTML = ''; 
+    if (p.images) {
+      p.images.forEach(imgUrl => {
+        const img = document.createElement('img'); img.src = imgUrl; 
+        img.onload = () => img.classList.add('loaded'); 
+        img.loading = "lazy"; gallery.appendChild(img);
       });
     }
+    lb.classList.add('active'); document.body.style.overflow = 'hidden'; lb.scrollTop = 0; 
+  }
 
-    function openLightbox(index) {
-      if(index < 0) return;
-      const p = globalData[index];
-      const lb = document.getElementById('lightbox');
-      
-      document.getElementById('lb-category').textContent = p.分類;
-      document.getElementById('lb-title').textContent = p.專案名稱;
-      document.getElementById('lb-desc').textContent = p.描述;
-      document.getElementById('lb-title-bar').textContent = `${p.專案名稱}.exe`;
-      
-      const gallery = document.getElementById('lb-gallery');
-      gallery.innerHTML = ''; 
-      
-      if (p.images) {
-        p.images.forEach(imgUrl => {
-          const imgWrap = document.createElement('div');
-          imgWrap.className = "relative p-1.5 md:p-2 border border-cyber-cyan/20 bg-cyber-black/50";
-          const img = document.createElement('img');
-          img.src = imgUrl;
-          img.className = "w-full object-contain filter contrast-125";
-          img.loading = "lazy";
-          imgWrap.appendChild(img);
-          gallery.appendChild(imgWrap);
-        });
-      }
+  function navigateLightbox(direction) {
+    let newIndex = currentProjectIndex + direction;
+    if (newIndex < 0) newIndex = activeFilteredData.length - 1; 
+    if (newIndex >= activeFilteredData.length) newIndex = 0;   
+    const content = document.querySelector('.lb-content');
+    content.style.opacity = 0; content.style.transition = 'opacity 0.2s ease';
+    setTimeout(() => { openLightbox(newIndex); content.style.opacity = 1; }, 200);
+  }
 
-      lb.classList.remove('hidden');
-      document.body.style.overflow = 'hidden'; 
-    }
+  window.addEventListener('keydown', (e) => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigateLightbox(-1);
+    if (e.key === 'ArrowRight') navigateLightbox(1);
+  });
 
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.add('hidden');
-      document.body.style.overflow = 'auto';
-    }
-  </script>
+  // ── 觸控滑動 (Swipe) 切換 ──
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const lightboxElement = document.getElementById('lightbox');
+  
+  lightboxElement.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, {passive: true});
+
+  lightboxElement.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, {passive: true});
+
+  function handleSwipe() {
+    const swipeThreshold = 50; 
+    if (touchEndX < touchStartX - swipeThreshold) navigateLightbox(1); 
+    if (touchEndX > touchStartX + swipeThreshold) navigateLightbox(-1); 
+  }
+
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = 'auto'; }
+</script>
 </body>
 </html>
