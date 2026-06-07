@@ -396,6 +396,16 @@
     document.getElementById('lb-category').textContent = p.分類;
     document.getElementById('lb-title').textContent = p.專案名稱;
     document.getElementById('lb-desc').textContent = p.描述;
+
+    // 📊 【新增】GA4 自訂事件追蹤：記錄專案點擊
+    if (typeof gtag === 'function') {
+      gtag('event', 'view_project', {
+        'project_title': p.專案名稱,
+        'project_category': p.分類
+      });
+      console.log(`GA4 Tracked: ${p.專案名稱}`); // 開發者除錯用，上線可保留不影響
+    }
+
     const gallery = document.getElementById('lb-gallery'); gallery.innerHTML = ''; 
     if (p.images) {
       p.images.forEach(imgUrl => {
