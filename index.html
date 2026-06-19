@@ -77,10 +77,9 @@
   #hero { min-height: 100vh; display: grid; place-items: center; padding: 8rem 3rem 4rem; position: relative; overflow: hidden; }
   .hero-bg {
     position: absolute; inset: 0;
-    /* 預設的純 CSS 背景（ radial-gradient ），在 JS 載入真實圖片後會被完全覆蓋 */
     background: radial-gradient(ellipse 60% 50% at 80% 30%, rgba(200,168,122,.13) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 70%, rgba(200,168,122,.08) 0%, transparent 60%);
     transition: transform 0.1s ease-out; 
-    opacity: 1; /* 確保初始不透明度為 1 */
+    opacity: 1; 
   }
   .hero-inner { position: relative; text-align: center; max-width: 720px; }
   .hero-eyebrow { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--warm); margin-bottom: 1rem; }
@@ -320,21 +319,17 @@
   // ── 🛡️ 防線：動態 Hero Banner 渲染 (完全呈現圖片，不疊加遮罩或調整透明度) ──
   function renderHeroBanner(bannerUrl) {
     const heroBg = document.getElementById('heroBg');
-    if (!heroBg || !bannerUrl) return; // 狀況 A：如果 API 沒有設定 Banner，維持原始純 CSS 漸層背景
+    if (!heroBg || !bannerUrl) return; 
 
-    // 狀況 B：有 Banner，啟動預載機制
     const img = new Image();
     img.src = bannerUrl;
     
     img.onload = () => {
-      // 💡 關鍵優化：移除原本疊加在圖片上的線性漸層遮罩，讓圖片「完整呈現」。
-      // 直接將 url() 作為唯一的背景圖片，並確保 background-size: cover 填滿。
       heroBg.style.backgroundImage = `url('${bannerUrl}')`;
       heroBg.style.backgroundSize = 'cover';
       heroBg.style.backgroundPosition = 'center';
       heroBg.style.backgroundRepeat = 'no-repeat';
       
-      // 保留極致平滑的漸顯過場動畫 (Fade-in)，動畫完成後圖片仍是 100% 不透明呈现
       heroBg.animate([
         { opacity: 0 },
         { opacity: 1 }
@@ -388,7 +383,7 @@
     if (window.scrollY < window.innerHeight) document.getElementById('heroBg').style.transform = `translateY(${window.scrollY * 0.2}px)`;
   });
 
-  // ── 🚀 核心優化：API 向下相容 + 動態 Banner 觸發 ──
+  // ── 🚀 核心優化：API 雙語系向下相容 ──
   window.onload = async function() {
     const statusDisplay = document.getElementById('status-display');
     const gridEl = document.getElementById('worksGrid');
@@ -398,27 +393,25 @@
       const payload = await response.json();
       if (payload.error) throw new Error(payload.error);
       
-      // 🛡️ API 向下相容萃取防線：支援最新 { data: {...} } 格式，也支援舊版平面結構
       const apiData = payload.data || payload; 
       const orderedCategories = apiData.categories || apiData.orderedCategories || [];
       const rawProjects = apiData.projects || (Array.isArray(apiData) ? apiData : []);
       const heroBannerUrl = apiData.heroBanner || null;
 
-      // 觸發自訂 Banner 渲染 (圖片直出，無遮罩)
       if (heroBannerUrl) {
         renderHeroBanner(cleanAndNormalizeUrl(heroBannerUrl));
       }
       
-      // 🛡️ 一級清洗防線：自動過濾空白列
+      // 🛡️ 雙語系相容：判定新版 title 或舊版 專案名稱
       globalData = rawProjects.filter(p => {
-        const hasTitle = p.專案名稱 && p.專案名稱.toString().trim() !== "";
+        const titleText = p.title || p.專案名稱 || "";
+        const hasTitle = titleText.toString().trim() !== "";
         const hasImages = p.images && p.images.length > 0;
         return hasTitle || hasImages;
-      }).reverse(); // 倒序排列專案
+      }).reverse(); 
 
       activeFilteredData = [...globalData];
       
-      // 🎬 骨架屏與網格的平滑淡入動畫控制
       statusDisplay.style.opacity = '0';
       setTimeout(() => {
         statusDisplay.style.display = 'none';
@@ -444,7 +437,12 @@
     } else {
       let fallback = [];
       globalData.forEach(item => {
-        if(item.分類) item.分類.split(',').forEach(c => fallback.push(c.trim()));
+        // 雙語系支援
+        if (item.categories && Array.isArray(item.categories)) {
+          item.categories.forEach(c => fallback.push(c));
+        } else if (item.分類) {
+          item.分類.split(',').forEach(c => fallback.push(c.trim()));
+        }
       });
       categories = ['ALL', ...new Set(fallback.filter(Boolean))];
     }
@@ -459,7 +457,9 @@
         e.target.classList.add('active');
         
         activeFilteredData = cat === 'ALL' ? globalData : globalData.filter(p => {
-          const pCats = p.分類 ? p.分類.split(',').map(c => c.trim()) : [];
+          const pCats = (p.categories && Array.isArray(p.categories)) 
+                        ? p.categories 
+                        : (p.分類 ? p.分類.split(',').map(c => c.trim()) : []);
           return pCats.includes(cat);
         });
         
@@ -491,22 +491,29 @@
     projects.forEach((p, idx) => {
       const card = document.createElement('div'); card.className = "work-card";
       
-      // idx 必須與 activeFilteredData 對齊
       card.onclick = () => openLightbox(idx);
       card.setAttribute('data-cursor', 'VIEW');
 
-      let coverImage = '';
-      if (p.images && Array.isArray(p.images) && p.images.length > 0) {
+      let coverImage = p.customCover || '';
+      if (!coverImage && p.images && Array.isArray(p.images) && p.images.length > 0) {
         let rawCover = typeof p.images[0] === 'object' ? p.images[0].url : p.images[0];
         coverImage = cleanAndNormalizeUrl(rawCover);
+      } else if (coverImage) {
+        coverImage = cleanAndNormalizeUrl(coverImage);
       }
+
+      // 🛡️ 雙屬性安全抓取
+      const pTitle = p.title || p.專案名稱 || 'Untitled';
+      const pCat = (p.categories && Array.isArray(p.categories)) 
+                   ? p.categories.join(', ') 
+                   : (p.分類 || '');
 
       card.innerHTML = `
         <div class="work-thumb">
-          ${coverImage ? `<img src="${coverImage}" onload="this.classList.add('loaded')" alt="${p.專案名稱 || 'Untitled'}">` : `<div class="work-thumb-placeholder">No Image</div>`}
+          ${coverImage ? `<img src="${coverImage}" onload="this.classList.add('loaded')" alt="${pTitle}">` : `<div class="work-thumb-placeholder">No Image</div>`}
           <div class="work-overlay"><span class="work-overlay-text">View Project</span></div>
         </div>
-        <div class="work-meta"><p class="work-title">${p.專案名稱 || 'Untitled'}</p><p class="work-tag">${p.分類 || ''}</p></div>
+        <div class="work-meta"><p class="work-title">${pTitle}</p><p class="work-tag">${pCat}</p></div>
       `;
       grid.appendChild(card);
       cardObserver.observe(card); 
@@ -520,17 +527,21 @@
     const p = activeFilteredData[index]; 
     const lb = document.getElementById('lightbox');
     
-    document.getElementById('lb-category').textContent = p.分類 || '';
-    document.getElementById('lb-title').textContent = p.專案名稱 || 'Untitled';
-    document.getElementById('lb-desc').textContent = p.描述 || '';
+    // 🛡️ 雙屬性安全抓取，確保文字 100% 呈現
+    const pTitle = p.title || p.專案名稱 || 'Untitled';
+    const pCat = (p.categories && Array.isArray(p.categories)) ? p.categories.join(', ') : (p.分類 || '');
+    const pDesc = p.description || p.描述 || '';
+
+    document.getElementById('lb-category').textContent = pCat;
+    document.getElementById('lb-title').textContent = pTitle;
+    document.getElementById('lb-desc').textContent = pDesc;
     
     if (typeof gtag === 'function') {
-      gtag('event', 'view_project', { 'project_title': p.專案名稱 || 'Untitled', 'project_category': p.分類 || '' });
+      gtag('event', 'view_project', { 'project_title': pTitle, 'project_category': pCat });
     }
     
     const gallery = document.getElementById('lb-gallery'); gallery.innerHTML = ''; 
     
-    // 🛡️ 雙向多態相容性清洗防線
     if (p.images && Array.isArray(p.images) && p.images.length > 0) {
       p.images.forEach(asset => {
         const itemWrapper = document.createElement('div'); itemWrapper.className = 'lb-gallery-item';
