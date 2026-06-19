@@ -76,8 +76,11 @@
   /* ── HERO ── */
   #hero { min-height: 100vh; display: grid; place-items: center; padding: 8rem 3rem 4rem; position: relative; overflow: hidden; }
   .hero-bg {
-    position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 80% 30%, rgba(200,168,122,.13) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 70%, rgba(200,168,122,.08) 0%, transparent 60%);
+    position: absolute; inset: 0;
+    /* 預設的純 CSS 背景（ radial-gradient ），在 JS 載入真實圖片後會被完全覆蓋 */
+    background: radial-gradient(ellipse 60% 50% at 80% 30%, rgba(200,168,122,.13) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 70%, rgba(200,168,122,.08) 0%, transparent 60%);
     transition: transform 0.1s ease-out; 
+    opacity: 1; /* 確保初始不透明度為 1 */
   }
   .hero-inner { position: relative; text-align: center; max-width: 720px; }
   .hero-eyebrow { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--warm); margin-bottom: 1rem; }
@@ -286,11 +289,6 @@
         <h2 class="lb-title" id="lb-title"></h2>
         <p class="lb-desc" id="lb-desc"></p>
       </div>
-      
-      <div class="lb-inline-nav">
-        <button onclick="navigateLightbox(-1)" data-cursor="PREV">← Prev Project</button>
-        <button onclick="navigateLightbox(1)" data-cursor="NEXT">Next Project →</button>
-      </div>
     </div>
     
     <div class="lb-gallery" id="lb-gallery"></div>
@@ -298,7 +296,7 @@
 </div>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycby-UP0XRfUTr_mORwwHvb56qtOwCzjyWN4rIPZiQbVO3Zu6uof2cUKpWiZ31g2rKzVmKw/exec"; 
+  const API_URL = "https://script.google.com/macros/s/AKfycbyS02wrmaGsxoL0ioJRTwlJuGTCwfAYkwE19tIyNN890PfnOSOXXLMllJlrQVuBJdzl/exec"; 
   let globalData = [];
   let currentProjectIndex = -1;
   let activeFilteredData = [];
@@ -317,6 +315,39 @@
     }
     
     return cleanUrl;
+  }
+
+  // ── 🛡️ 防線：動態 Hero Banner 渲染 (完全呈現圖片，不疊加遮罩或調整透明度) ──
+  function renderHeroBanner(bannerUrl) {
+    const heroBg = document.getElementById('heroBg');
+    if (!heroBg || !bannerUrl) return; // 狀況 A：如果 API 沒有設定 Banner，維持原始純 CSS 漸層背景
+
+    // 狀況 B：有 Banner，啟動預載機制
+    const img = new Image();
+    img.src = bannerUrl;
+    
+    img.onload = () => {
+      // 💡 關鍵優化：移除原本疊加在圖片上的線性漸層遮罩，讓圖片「完整呈現」。
+      // 直接將 url() 作為唯一的背景圖片，並確保 background-size: cover 填滿。
+      heroBg.style.backgroundImage = `url('${bannerUrl}')`;
+      heroBg.style.backgroundSize = 'cover';
+      heroBg.style.backgroundPosition = 'center';
+      heroBg.style.backgroundRepeat = 'no-repeat';
+      
+      // 保留極致平滑的漸顯過場動畫 (Fade-in)，動畫完成後圖片仍是 100% 不透明呈现
+      heroBg.animate([
+        { opacity: 0 },
+        { opacity: 1 }
+      ], {
+        duration: 1200,
+        easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+        fill: 'forwards'
+      });
+    };
+
+    img.onerror = () => {
+      console.warn("Hero Banner 圖片載入失敗，已切換回預設背景防線。");
+    };
   }
 
   // ── 自訂游標綁定與語意轉換 ──
@@ -357,7 +388,7 @@
     if (window.scrollY < window.innerHeight) document.getElementById('heroBg').style.transform = `translateY(${window.scrollY * 0.2}px)`;
   });
 
-  // ── 🚀 核心優化：清洗空白幽靈列 + 骨架屏平滑淡出過渡 ──
+  // ── 🚀 核心優化：API 向下相容 + 動態 Banner 觸發 ──
   window.onload = async function() {
     const statusDisplay = document.getElementById('status-display');
     const gridEl = document.getElementById('worksGrid');
@@ -367,15 +398,23 @@
       const payload = await response.json();
       if (payload.error) throw new Error(payload.error);
       
-      const orderedCategories = payload.orderedCategories || [];
-      const rawProjects = payload.projects || [];
+      // 🛡️ API 向下相容萃取防線：支援最新 { data: {...} } 格式，也支援舊版平面結構
+      const apiData = payload.data || payload; 
+      const orderedCategories = apiData.categories || apiData.orderedCategories || [];
+      const rawProjects = apiData.projects || (Array.isArray(apiData) ? apiData : []);
+      const heroBannerUrl = apiData.heroBanner || null;
+
+      // 觸發自訂 Banner 渲染 (圖片直出，無遮罩)
+      if (heroBannerUrl) {
+        renderHeroBanner(cleanAndNormalizeUrl(heroBannerUrl));
+      }
       
-      // 🛡️ 一級清洗防線：自動過濾掉資料庫中不小心中斷、完全沒有專案名稱與圖資的空白列
+      // 🛡️ 一級清洗防線：自動過濾空白列
       globalData = rawProjects.filter(p => {
         const hasTitle = p.專案名稱 && p.專案名稱.toString().trim() !== "";
         const hasImages = p.images && p.images.length > 0;
         return hasTitle || hasImages;
-      }).reverse(); // 倒序排列作品專案本身
+      }).reverse(); // 倒序排列專案
 
       activeFilteredData = [...globalData];
       
@@ -385,7 +424,7 @@
         statusDisplay.style.display = 'none';
         generateFilters(orderedCategories); 
         renderGrid(globalData); 
-        gridEl.style.opacity = '1'; // 開啟前端網格漸顯
+        gridEl.style.opacity = '1'; 
         bindCursorEvents(); 
       }, 400);
 
@@ -474,7 +513,7 @@
     });
   }
 
-  // ── 🔓 開啟檢視器：徹底移除錯誤排序干擾，100% 依原封存順序（數字小在前）直覺直出 ──
+  // ── 🔓 開啟檢視器 ──
   function openLightbox(index) {
     if(index < 0 || index >= activeFilteredData.length) return;
     currentProjectIndex = index;
@@ -493,8 +532,6 @@
     
     // 🛡️ 雙向多態相容性清洗防線
     if (p.images && Array.isArray(p.images) && p.images.length > 0) {
-      
-      // 💡 終極修正關鍵：直接使用原始封存的順序（不呼叫任何會翻轉或顛倒順序的 .sort()），直接渲染！
       p.images.forEach(asset => {
         const itemWrapper = document.createElement('div'); itemWrapper.className = 'lb-gallery-item';
         
